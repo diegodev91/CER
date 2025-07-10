@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 // Components
 import Header from './components/common/Header/Header';
 import Footer from './components/common/Footer/Footer';
+import DonationModal from './components/common/DonationModal/DonationModal';
 
 // Pages
 import Home from './components/pages/Home/Home';
@@ -53,6 +54,9 @@ function App() {
           </main>
           
           <Footer />
+          
+          {/* Donation Modal */}
+          <DonationModal />
           
           {/* Toast notifications */}
           <Toaster 

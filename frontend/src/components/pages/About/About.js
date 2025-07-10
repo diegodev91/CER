@@ -4,19 +4,19 @@ import { Youtube, Users, Heart, Star, Calendar, Play } from 'lucide-react';
 const About = () => {
   const teamMembers = [
     {
-      name: "El Equipo CER",
-      role: "Creadores de Contenido",
-      description: "El talentoso equipo detrás de cada episodio y reel.",
+      name: "El Grillo",
+      role: "Presentador Principal",
+      description: "El corazón del programa, siempre con una sonrisa y una historia que contar.",
     },
     {
-      name: "RORO Network",
-      role: "Canal de YouTube",
-      description: "La plataforma que nos permite llegar a todos los CerRanos.",
+      name: "Doctor Oñito",
+      role: "Co-presentador",
+      description: "El sabio del grupo, aporta conocimiento y experiencia a cada episodio.",
     },
     {
-      name: "Comunidad CerRanos",
-      role: "Nuestra Familia",
-      description: "Los seguidores que hacen posible este hermoso proyecto.",
+      name: "Gerardo Manuel",
+      role: "Co-presentador",
+      description: "La energía y diversión del programa, siempre listo para una aventura.",
     }
   ];
 
@@ -214,7 +214,7 @@ const About = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://youtube.com/@roronetwork"
+              href="https://www.youtube.com/@LaRoroNetworkOficial"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"

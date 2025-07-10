@@ -1,8 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Play, Users, Star, Calendar, Youtube, Heart } from 'lucide-react';
+import { Play, Users, Star, Calendar, Youtube, Heart, ArrowRight } from 'lucide-react';
+import YouTubeEmbed from '../../common/YouTubeEmbed/YouTubeEmbed';
 
 const Home = () => {
+  const [featuredEpisode, setFeaturedEpisode] = useState(null);
+  const [featuredReels, setFeaturedReels] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFeaturedContent();
+  }, []);
+
+  const fetchFeaturedContent = async () => {
+    try {
+      setLoading(true);
+      
+      // Fetch featured episode
+      const episodeResponse = await fetch('/api/episodes/featured');
+      if (episodeResponse.ok) {
+        const episodeData = await episodeResponse.json();
+        if (episodeData.success && episodeData.data) {
+          setFeaturedEpisode(episodeData.data);
+        }
+      }
+
+      // Fetch featured reels
+      const reelsResponse = await fetch('/api/reels/featured?limit=3');
+      if (reelsResponse.ok) {
+        const reelsData = await reelsResponse.json();
+        if (reelsData.success) {
+          setFeaturedReels(reelsData.data);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching featured content:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const stats = [
     { label: 'CerRanos', value: '50K+', icon: Users, color: 'text-blue-600' },
     { label: 'Episodios', value: '100+', icon: Play, color: 'text-green-600' },
@@ -155,6 +191,128 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Featured Episode Section */}
+      {!loading && featuredEpisode && (
+        <div className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                🎬 Episodio Destacado
+              </h2>
+              <p className="text-lg text-gray-600">
+                El último episodio de Cuidando el Rancho
+              </p>
+            </div>
+            
+            <div className="bg-gray-50 rounded-2xl p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <YouTubeEmbed
+                    videoId={featuredEpisode.youtubeVideoId}
+                    title={featuredEpisode.title}
+                    thumbnail={featuredEpisode.thumbnailUrl}
+                    duration={featuredEpisode.duration * 60}
+                    viewCount={featuredEpisode.viewCount}
+                    publishedAt={featuredEpisode.airDate}
+                    showDetails={false}
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 mb-4">
+                    <span className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                      Temporada {featuredEpisode.season} • Episodio {featuredEpisode.episodeNumber}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {featuredEpisode.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    {featuredEpisode.description}
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <Link
+                      to={`/episodes/${featuredEpisode.id}`}
+                      className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+                    >
+                      <Play className="h-4 w-4 mr-2" />
+                      Ver Episodio Completo
+                    </Link>
+                    <Link
+                      to="/episodes"
+                      className="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
+                    >
+                      Ver todos los episodios
+                      <ArrowRight className="h-4 w-4 ml-1" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Featured Reels Section */}
+      {!loading && featuredReels.length > 0 && (
+        <div className="py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                ⭐ Reels Destacados
+              </h2>
+              <p className="text-lg text-gray-600">
+                Los mejores momentos en formato corto
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {featuredReels.map((reel) => (
+                <div key={reel.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <YouTubeEmbed
+                    videoId={reel.youtubeVideoId}
+                    title={reel.title}
+                    thumbnail={reel.thumbnailUrl}
+                    duration={reel.duration}
+                    viewCount={reel.viewCount}
+                    publishedAt={reel.publishedAt}
+                    showDetails={false}
+                  />
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                      {reel.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      {reel.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        ⭐ Destacado
+                      </span>
+                      <button
+                        onClick={() => window.open(`https://www.youtube.com/watch?v=${reel.youtubeVideoId}`, '_blank')}
+                        className="text-green-600 hover:text-green-700 text-sm font-medium"
+                      >
+                        Ver Reel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="text-center mt-8">
+              <Link
+                to="/reels"
+                className="inline-flex items-center px-6 py-3 bg-white text-gray-700 font-medium rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              >
+                Ver todos los Reels
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* CTA Section */}
       <div className="py-16 bg-green-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -167,7 +325,7 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://youtube.com/@roronetwork"
+              href="https://www.youtube.com/@LaRoroNetworkOficial"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"

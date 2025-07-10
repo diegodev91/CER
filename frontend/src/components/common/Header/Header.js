@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Tv, Menu, X } from 'lucide-react';
+import { Tv, Menu, X, Youtube } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -40,14 +40,29 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white hover:text-green-200"
+          {/* Right side - YouTube link + Mobile menu */}
+          <div className="flex items-center space-x-4">
+            {/* YouTube Channel Link */}
+            <a
+              href="https://www.youtube.com/@LaRoroNetworkOficial"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center space-x-2 bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg transition-colors duration-200"
+              title="Ver en YouTube"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+              <Youtube className="h-4 w-4" />
+              <span className="text-sm font-medium">YouTube</span>
+            </a>
+
+          {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white hover:text-green-200"
+              >
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -65,6 +80,17 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              {/* YouTube link in mobile menu */}
+              <a
+                href="https://www.youtube.com/@LaRoroNetworkOficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 px-3 py-2 text-base font-medium hover:text-green-200 hover:bg-green-700 rounded-md transition-colors duration-200"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Youtube className="h-5 w-5" />
+                <span>Ver en YouTube</span>
+              </a>
             </div>
           </div>
         )}

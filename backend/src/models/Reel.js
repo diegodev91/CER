@@ -17,15 +17,18 @@ const Reel = sequelize.define('Reel', {
   },
   youtubeVideoId: {
     type: DataTypes.STRING,
-    allowNull: false // Los reels necesitan video ID
+    allowNull: false, // Los reels necesitan video ID
+    field: 'youtube_video_id'
   },
   youtubeShortsUrl: {
     type: DataTypes.STRING,
-    allowNull: true // URL completa del YouTube Short
+    allowNull: true, // URL completa del YouTube Short
+    field: 'youtube_shorts_url'
   },
   thumbnailUrl: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    field: 'thumbnail_url'
   },
   duration: {
     type: DataTypes.INTEGER, // en segundos (reels son cortos)
@@ -33,23 +36,28 @@ const Reel = sequelize.define('Reel', {
   },
   viewCount: {
     type: DataTypes.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    field: 'view_count'
   },
   likeCount: {
     type: DataTypes.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    field: 'like_count'
   },
   isPublished: {
     type: DataTypes.BOOLEAN,
-    defaultValue: true
+    defaultValue: true,
+    field: 'is_published'
   },
   isFeatured: {
     type: DataTypes.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
+    field: 'is_featured'
   },
   publishedAt: {
     type: DataTypes.DATE,
-    allowNull: true
+    allowNull: true,
+    field: 'published_at'
   },
   tags: {
     type: DataTypes.JSON,
@@ -62,7 +70,8 @@ const Reel = sequelize.define('Reel', {
   }
 }, {
   tableName: 'reels',
-  timestamps: true
+  timestamps: true,
+  underscored: true
 });
 
 module.exports = Reel;
