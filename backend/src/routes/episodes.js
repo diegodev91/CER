@@ -24,13 +24,14 @@ router.get('/', async (req, res) => {
     });
 
     res.json({
-      episodes: episodes.rows,
+      success: true,
+      data: episodes.rows,
       totalCount: episodes.count,
       currentPage: parseInt(page),
       totalPages: Math.ceil(episodes.count / limit)
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -80,9 +81,12 @@ router.get('/seasons/list', async (req, res) => {
       order: [['season', 'DESC']]
     });
 
-    res.json(seasons.map(s => s.season));
+    res.json({
+      success: true,
+      data: seasons.map(s => ({ value: s.season, label: `Temporada ${s.season}` }))
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

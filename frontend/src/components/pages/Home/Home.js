@@ -4,6 +4,7 @@ import { Play, Users, Star, Calendar, Youtube, Heart, ArrowRight } from 'lucide-
 import YouTubeEmbed from '../../common/YouTubeEmbed/YouTubeEmbed';
 import YouTubePlaylist from '../../common/YouTubePlaylist/YouTubePlaylist';
 import YouTubeShorts from '../../common/YouTubeShorts/YouTubeShorts';
+import api from '../../../services/api';
 
 const Home = () => {
   const [featuredEpisode, setFeaturedEpisode] = useState(null);
@@ -20,40 +21,23 @@ const Home = () => {
     try {
       setLoading(true);
       
-      // Fetch featured episode
-      const episodeResponse = await fetch('/api/episodes/featured');
-      if (episodeResponse.ok) {
-        const episodeData = await episodeResponse.json();
-        if (episodeData.success && episodeData.data) {
-          setFeaturedEpisode(episodeData.data);
-        }
-      }
-
-      // Fetch all episodes for playlist
-      const allEpisodesResponse = await fetch('/api/episodes?limit=10');
-      if (allEpisodesResponse.ok) {
-        const allEpisodesData = await allEpisodesResponse.json();
-        if (allEpisodesData.success) {
-          setAllEpisodes(allEpisodesData.data);
-        }
+      // Fetch all episodes for playlist - use the first one as featured
+      const allEpisodesData = await api.get('/episodes?limit=10');
+      if (allEpisodesData.success && allEpisodesData.data.length > 0) {
+        setAllEpisodes(allEpisodesData.data);
+        setFeaturedEpisode(allEpisodesData.data[0]); // Use first episode as featured
       }
 
       // Fetch featured reels
-      const reelsResponse = await fetch('/api/reels/featured?limit=6');
-      if (reelsResponse.ok) {
-        const reelsData = await reelsResponse.json();
-        if (reelsData.success) {
-          setFeaturedReels(reelsData.data);
-        }
+      const reelsData = await api.get('/reels/featured?limit=6');
+      if (reelsData.success) {
+        setFeaturedReels(reelsData.data);
       }
 
       // Fetch all reels for shorts section
-      const allReelsResponse = await fetch('/api/reels?limit=8');
-      if (allReelsResponse.ok) {
-        const allReelsData = await allReelsResponse.json();
-        if (allReelsData.success) {
-          setAllReels(allReelsData.data);
-        }
+      const allReelsData = await api.get('/reels?limit=8');
+      if (allReelsData.success) {
+        setAllReels(allReelsData.data);
       }
     } catch (error) {
       console.error('Error fetching featured content:', error);

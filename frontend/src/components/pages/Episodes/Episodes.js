@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, Eye, Play, Filter } from 'lucide-react';
 import YouTubeEmbed from '../../common/YouTubeEmbed/YouTubeEmbed';
+import api from '../../../services/api';
+import { endpoints } from '../../../config/api';
 
 const Episodes = () => {
   const [episodes, setEpisodes] = useState([]);
@@ -19,8 +21,7 @@ const Episodes = () => {
 
   const fetchSeasons = async () => {
     try {
-      const response = await fetch('/api/episodes/seasons');
-      const data = await response.json();
+      const data = await api.get(endpoints.episodes.getSeasons);
       if (data.success) {
         setSeasons([
           { value: 'all', label: 'Todas las temporadas' },
@@ -36,11 +37,10 @@ const Episodes = () => {
     try {
       setLoading(true);
       const url = selectedSeason === 'all' 
-        ? '/api/episodes'
-        : `/api/episodes?season=${selectedSeason}`;
+        ? endpoints.episodes.getAll
+        : `${endpoints.episodes.getAll}?season=${selectedSeason}`;
       
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await api.get(url);
       if (data.success) {
         setEpisodes(data.data);
       }

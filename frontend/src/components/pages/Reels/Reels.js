@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Eye, Clock, Tag } from 'lucide-react';
+import api from '../../../services/api';
 
 const Reels = () => {
   const [reels, setReels] = useState([]);
@@ -29,8 +30,7 @@ const Reels = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/api/reels/categories');
-      const data = await response.json();
+      const data = await api.get('/reels/categories');
       if (data.success) {
         setCategories([
           { value: 'all', label: 'Todos', emoji: '📺' },
@@ -44,8 +44,7 @@ const Reels = () => {
 
   const fetchFeaturedReels = async () => {
     try {
-      const response = await fetch('/api/reels/featured');
-      const data = await response.json();
+      const data = await api.get('/reels/featured');
       if (data.success) {
         setFeaturedReels(data.data);
       }
@@ -58,11 +57,10 @@ const Reels = () => {
     try {
       setLoading(true);
       const url = selectedCategory === 'all' 
-        ? `/api/reels?page=${currentPage}&limit=12`
-        : `/api/reels?page=${currentPage}&limit=12&category=${selectedCategory}`;
+        ? `/reels?page=${currentPage}&limit=12`
+        : `/reels?page=${currentPage}&limit=12&category=${selectedCategory}`;
       
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await api.get(url);
       if (data.success) {
         setReels(data.data);
       }
