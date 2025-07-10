@@ -60,9 +60,16 @@ const Reel = sequelize.define('Reel', {
     field: 'published_at'
   },
   tags: {
-    type: DataTypes.JSON,
+    type: DataTypes.TEXT,
     allowNull: true,
-    defaultValue: []
+    defaultValue: '[]',
+    get() {
+      const value = this.getDataValue('tags');
+      return value ? JSON.parse(value) : [];
+    },
+    set(value) {
+      this.setDataValue('tags', JSON.stringify(value || []));
+    }
   },
   category: {
     type: DataTypes.ENUM('funny', 'highlights', 'behind-scenes', 'community', 'other'),

@@ -18,13 +18,17 @@
     "logging": false
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres",
+    "username": "ceradmin",
+    "password": "CER2025SecurePass!",
+    "database": "cerdb",
+    "host": "cer-sql-server-2025.database.windows.net",
+    "port": 1433,
+    "dialect": "mssql",
     "logging": false,
     "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
+      "options": {
+        "encrypt": true,
+        "enableArithAbort": true
       }
     }
   }

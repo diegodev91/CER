@@ -24,8 +24,15 @@ const Product = sequelize.define('Product', {
     allowNull: false
   },
   images: {
-    type: DataTypes.JSON, // Array of image URLs
-    allowNull: true
+    type: DataTypes.TEXT, // Array of image URLs stored as JSON string
+    allowNull: true,
+    get() {
+      const value = this.getDataValue('images');
+      return value ? JSON.parse(value) : [];
+    },
+    set(value) {
+      this.setDataValue('images', JSON.stringify(value || []));
+    }
   },
   stockQuantity: {
     type: DataTypes.INTEGER,
@@ -40,8 +47,15 @@ const Product = sequelize.define('Product', {
     allowNull: true
   },
   dimensions: {
-    type: DataTypes.JSON, // {length, width, height}
-    allowNull: true
+    type: DataTypes.TEXT, // {length, width, height} stored as JSON string
+    allowNull: true,
+    get() {
+      const value = this.getDataValue('dimensions');
+      return value ? JSON.parse(value) : null;
+    },
+    set(value) {
+      this.setDataValue('dimensions', value ? JSON.stringify(value) : null);
+    }
   },
   sku: {
     type: DataTypes.STRING,

@@ -41,8 +41,15 @@ const News = sequelize.define('News', {
     allowNull: true
   },
   tags: {
-    type: DataTypes.JSON,
-    allowNull: true
+    type: DataTypes.TEXT,
+    allowNull: true,
+    get() {
+      const value = this.getDataValue('tags');
+      return value ? JSON.parse(value) : [];
+    },
+    set(value) {
+      this.setDataValue('tags', JSON.stringify(value || []));
+    }
   },
   viewCount: {
     type: DataTypes.INTEGER,
