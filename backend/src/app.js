@@ -28,8 +28,8 @@ const limiter = rateLimit({
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'https://www.cuidando-el-rancho.com',
-    'https://cuidando-el-rancho.com',
+    'https://www.cuidandoelrancho.com',
+    'https://cuidandoelrancho.com',
     'https://gray-stone-00b286e10.1.azurestaticapps.net',
     'https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io',
     process.env.FRONTEND_URL

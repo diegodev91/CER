@@ -1,6 +1,6 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 
   (process.env.NODE_ENV === 'production' 
-    ? 'https://api.cuidando-el-rancho.com/api' 
+    ? 'https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io/api' 
     : 'http://localhost:5001/api');
 
 export const apiConfig = {
