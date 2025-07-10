@@ -72,13 +72,54 @@ echo "  - Max replicas: 2 (prevents runaway scaling)"
 echo "  - CPU: 0.25 cores"
 echo "  - Memory: 0.5 GB"
 
+# 4.5. Set environment variables for resource control
+echo "🔧 Setting environment variables for resource control..."
+
+az containerapp update \
+  --name "cer-backend" \
+  --resource-group "$RESOURCE_GROUP" \
+  --set-env-vars \
+    NODE_ENV=production \
+    MAX_MEMORY_MB=400 \
+    MAX_CPU_PERCENTAGE=80 \
+    REQUEST_TIMEOUT=30000 \
+    MAX_CONCURRENT_REQUESTS=50 \
+    DB_POOL_MAX=5 \
+    DB_POOL_MIN=1 \
+    DB_POOL_ACQUIRE=30000 \
+    DB_POOL_IDLE=10000 \
+    MAX_FILE_SIZE=5242880 \
+    MAX_FILES_PER_REQUEST=3 \
+    RATE_LIMIT_WINDOW_MS=900000 \
+    RATE_LIMIT_MAX_REQUESTS=50 \
+    STRICT_RATE_LIMIT_WINDOW_MS=300000 \
+    STRICT_RATE_LIMIT_MAX_REQUESTS=10 \
+    ENABLE_RESOURCE_MONITORING=true \
+    MEMORY_WARNING_THRESHOLD_MB=350 \
+    CPU_WARNING_THRESHOLD=75
+
+echo "✅ Environment variables configured for resource limits!"
+
 # 5. Database resource limits
-echo "🗄️ Checking database tier..."
+echo "🗄️ Checking database tier and setting auto-pause..."
 az sql db show \
   --name "cerdb" \
   --server "cer-sql-server-2025" \
   --resource-group "$RESOURCE_GROUP" \
   --query '{Tier:currentServiceObjectiveName,MaxSize:maxSizeBytes}' \
   --output table
+
+# Enable auto-pause for serverless SQL Database (if applicable)
+echo "⏸️ Configuring database auto-pause to save costs..."
+az sql db update \
+  --name "cerdb" \
+  --server "cer-sql-server-2025" \
+  --resource-group "$RESOURCE_GROUP" \
+  --auto-pause-delay 60 \
+  --capacity 1 \
+  --family Gen5 \
+  --compute-model Serverless || echo "ℹ️ Auto-pause not available for current database tier"
+
+echo "✅ Database configured for cost optimization!"
 
 echo "✅ Setup complete! Monitor costs at: https://portal.azure.com/#blade/Microsoft_Azure_CostManagement/Menu/overview"

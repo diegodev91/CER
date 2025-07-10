@@ -59,7 +59,11 @@ jobs:
           az containerapp update \
             --name ${{ env.CONTAINER_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            --min-replicas 0 \
+            --max-replicas 2 \
+            --cpu 0.25 \
+            --memory 0.5Gi
 
     - name: Logout from Azure
       run: az logout
