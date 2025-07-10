@@ -1,7 +1,7 @@
 # CER YouTube Integration Guide 🎬
 
 ## Overview
-This guide explains how the CER platform integrates with YouTube content from La Roro Network channel to provide a seamless viewing experience for the CerRanos community.
+This guide explains how the CER platform integrates with YouTube content from La Roro Network channel to provide a seamless viewing experience for the CERranos community.
 
 ## Real YouTube Content Integration
 

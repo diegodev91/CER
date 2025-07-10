@@ -46,7 +46,7 @@ const Home = () => {
     }
   };
   const stats = [
-    { label: 'CerRanos', value: '50K+', icon: Users, color: 'text-blue-600' },
+    { label: 'CERranos', value: '50K+', icon: Users, color: 'text-blue-600' },
     { label: 'Episodios', value: '100+', icon: Play, color: 'text-green-600' },
     { label: 'Años al aire', value: '3+', icon: Calendar, color: 'text-purple-600' },
     { label: 'Reels', value: '200+', icon: Star, color: 'text-yellow-600' },
@@ -68,7 +68,7 @@ const Home = () => {
       color: 'bg-yellow-500'
     },
     {
-      title: '📰 Noticias CerRanos',
+      title: '📰 Noticias CERranos',
       description: 'Mantente al día con las últimas noticias y actualizaciones del programa.',
       link: '/news',
       icon: Calendar,
@@ -76,7 +76,7 @@ const Home = () => {
     },
     {
       title: '🛒 Tienda Oficial',
-      description: 'Merchandising exclusivo para la comunidad CerRanos.',
+      description: 'Merchandising exclusivo para la comunidad CERranos.',
       link: '/shop',
       icon: Heart,
       color: 'bg-red-500'
@@ -106,7 +106,7 @@ const Home = () => {
             
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-green-100">
               El programa de YouTube favorito de la familia. 
-              Únete a la comunidad <span className="font-bold text-yellow-300">CerRanos</span> y 
+              Únete a la comunidad <span className="font-bold text-yellow-300">CERranos</span> y 
               disfruta del mejor contenido rural y familiar.
             </p>
             
@@ -135,7 +135,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              La Comunidad CerRanos
+              La Comunidad CERranos
             </h2>
             <p className="text-lg text-gray-600">
               Unidos por la pasión del campo y la familia
@@ -171,7 +171,7 @@ const Home = () => {
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Tu plataforma completa para disfrutar de todo el contenido de 
-              Cuidando el Rancho y conectar con otros CerRanos
+              Cuidando el Rancho y conectar con otros CERranos
             </p>
           </div>
           
@@ -372,7 +372,7 @@ const Home = () => {
       <div className="py-16 bg-green-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            ¡Únete a la Familia CerRanos!
+            ¡Únete a la Familia CERranos!
           </h2>
           <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
             Suscríbete a nuestro canal de YouTube y no te pierdas ningún episodio 

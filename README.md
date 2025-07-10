@@ -5,18 +5,18 @@
 [![GitHub Issues](https://img.shields.io/github/issues/diegodev91/CER)](https://github.com/diegodev91/CER/issues)
 [![YouTube Channel](https://img.shields.io/badge/YouTube-RORO%20Network-red?style=flat&logo=youtube)](https://youtube.com/@roronetwork)
 
-Una aplicación web moderna para el programa de YouTube "Cuidando el Rancho" de RORO Network. Una plataforma completa para los **CerRanos** con episodios embebidos, reels, noticias y merchandise oficial.
+Una aplicación web moderna para el programa de YouTube "Cuidando el Rancho" de RORO Network. Una plataforma completa para los **CERranos** con episodios embebidos, reels, noticias y merchandise oficial.
 
 ## 🎬 Acerca del Programa
 
-**CER - Cuidando el Rancho** es un programa de YouTube que se transmite en el canal **RORO Network**. Nuestra comunidad de seguidores se llama cariñosamente **"CerRanos"** y esta plataforma web está diseñada especialmente para ellos.
+**CER - Cuidando el Rancho** es un programa de YouTube que se transmite en el canal **RORO Network**. Nuestra comunidad de seguidores se llama cariñosamente **"CERranos"** y esta plataforma web está diseñada especialmente para ellos.
 
 ### Funcionalidades principales:
 - 📺 **Episodios de YouTube embebidos** - Ver todos los episodios directamente en la web
 - 🎥 **Reels y contenido corto** - Los mejores momentos en formato corto
 - 📰 **Noticias y actualizaciones** - Últimas novedades del programa
-- 🛒 **Tienda CerRanos** - Merchandise oficial exclusivo
-- 💬 **Comunidad** - Interacción entre CerRanos
+- 🛒 **Tienda CERranos** - Merchandise oficial exclusivo
+- 💬 **Comunidad** - Interacción entre CERranos
 
 ## 🚀 Quick Start
 
@@ -97,7 +97,7 @@ CER/
 
 ## 🎥 Screenshots
 
-### Home Page - Community CerRanos
+### Home Page - Community CERranos
 ![Home Page](https://via.placeholder.com/800x400/22c55e/ffffff?text=CER+Home+Page)
 
 ### Reels Section - YouTube Integration
@@ -163,7 +163,7 @@ PORT=5000
 
 ## 🤝 Contributing to CER
 
-We welcome contributions from the CerRanos community! Here's how you can help:
+We welcome contributions from the CERranos community! Here's how you can help:
 
 ### Development Setup
 1. Fork this repository
@@ -201,7 +201,7 @@ We welcome contributions from the CerRanos community! Here's how you can help:
 ## 🙏 Acknowledgments
 
 - RORO Network for the amazing YouTube content
-- The CerRanos community for their support
+- The CERranos community for their support
 - All contributors who help improve this platform
 - Open source libraries that make this project possible
 
@@ -212,7 +212,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 <div align="center">
-  <p>🌟 Made with ❤️ for the CerRanos community 🌟</p>
+  <p>🌟 Made with ❤️ for the CERranos community 🌟</p>
   <p>
     <a href="https://youtube.com/@roronetwork">
       <img src="https://img.shields.io/badge/YouTube-Subscribe-red?style=for-the-badge&logo=youtube" alt="Subscribe to RORO Network">

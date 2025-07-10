@@ -30,13 +30,13 @@ const About = () => {
     {
       year: "2022",
       title: "Crecimiento Exponencial",
-      description: "Alcanzamos los primeros 10K suscriptores CerRanos.",
+      description: "Alcanzamos los primeros 10K suscriptores CERranos.",
       icon: Users
     },
     {
       year: "2023",
       title: "Comunidad Consolidada",
-      description: "Superamos los 50K CerRanos y lanzamos contenido exclusivo.",
+      description: "Superamos los 50K CERranos y lanzamos contenido exclusivo.",
       icon: Heart
     },
     {
@@ -109,7 +109,7 @@ const About = () => {
                   <div className="flex items-start space-x-3">
                     <Users className="h-6 w-6 text-blue-500 mt-1" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Comunidad CerRanos</h4>
+                      <h4 className="font-semibold text-gray-900">Comunidad CERranos</h4>
                       <p className="text-gray-600">Una familia unida por valores compartidos</p>
                     </div>
                   </div>
@@ -206,7 +206,7 @@ const About = () => {
       <div className="py-16 bg-green-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            ¡Únete a la Familia CerRanos!
+            ¡Únete a la Familia CERranos!
           </h2>
           <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
             Forma parte de nuestra comunidad y disfruta de contenido exclusivo, 

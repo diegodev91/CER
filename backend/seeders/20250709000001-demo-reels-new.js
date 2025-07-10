@@ -23,7 +23,7 @@ module.exports = {
       },
       {
         title: '¡CON LA BEBE NO CAUTERUCCIO! 😶',
-        description: 'Momento divertido con La Bebe en el programa. Una frase que se volvió viral entre los CerRanos.',
+        description: 'Momento divertido con La Bebe en el programa. Una frase que se volvió viral entre los CERranos.',
         youtube_video_id: 'TwEgtV8uGpE',
         youtube_shorts_url: 'https://youtube.com/shorts/TwEgtV8uGpE',
         thumbnail_url: 'https://i.ytimg.com/vi/TwEgtV8uGpE/maxresdefault.jpg',

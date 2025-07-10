@@ -115,7 +115,7 @@ router.get('/categories', async (req, res) => {
       { value: 'funny', label: 'Divertidos', emoji: '😂' },
       { value: 'highlights', label: 'Mejores Momentos', emoji: '⭐' },
       { value: 'behind-scenes', label: 'Detrás de Cámaras', emoji: '🎬' },
-      { value: 'community', label: 'Comunidad CerRanos', emoji: '👥' },
+      { value: 'community', label: 'Comunidad CERranos', emoji: '👥' },
       { value: 'other', label: 'Otros', emoji: '📺' }
     ];
 

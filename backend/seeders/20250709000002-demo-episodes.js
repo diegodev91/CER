@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         title: 'SI REÍMOS PERDEMOS | CER: CUIDANDO EL RANCHO',
-        description: 'Los CerRanos se enfrentan al desafío de "Si Reímos Perdemos" con los mejores memes, videos y momentos divertidos. ¿Podrán mantener la compostura El Grillo, Doctor Oñito y Gerardo Manuel?',
+        description: 'Los CERranos se enfrentan al desafío de "Si Reímos Perdemos" con los mejores memes, videos y momentos divertidos. ¿Podrán mantener la compostura El Grillo, Doctor Oñito y Gerardo Manuel?',
         season: 1,
         episodeNumber: 2,
         youtubeVideoId: 'O-T2uch9mF0',
@@ -96,7 +96,7 @@ module.exports = {
       },
       {
         title: 'CHESPIRITO TIENE 6 ERRORES | CER: CUIDANDO EL RANCHO',
-        description: 'Los CerRanos analizan la icónica serie de Chespirito y descubren detalles curiosos y errores que nunca habías notado. Un homenaje lleno de nostalgia y humor.',
+        description: 'Los CERranos analizan la icónica serie de Chespirito y descubren detalles curiosos y errores que nunca habías notado. Un homenaje lleno de nostalgia y humor.',
         season: 1,
         episodeNumber: 7,
         youtubeVideoId: '7QhqxqHToD8',
@@ -141,7 +141,7 @@ module.exports = {
       },
       {
         title: 'HABEMUS CER en VIVO | CER: CUIDANDO EL RANCHO',
-        description: 'Anuncio oficial del evento en vivo de CER. Los hosts revelan todos los detalles del gran encuentro con la comunidad CerRanos.',
+        description: 'Anuncio oficial del evento en vivo de CER. Los hosts revelan todos los detalles del gran encuentro con la comunidad CERranos.',
         season: 1,
         episodeNumber: 10,
         youtubeVideoId: 'qVv8dMMv9L0',
@@ -150,7 +150,7 @@ module.exports = {
         airDate: new Date('2025-06-25'),
         isPublished: true,
         viewCount: 27000,
-        tags: JSON.stringify(['evento', 'en-vivo', 'anuncio', 'comunidad', 'ceranos']),
+        tags: JSON.stringify(['evento', 'en-vivo', 'anuncio', 'comunidad', 'cerranos']),
         createdAt: new Date(),
         updatedAt: new Date()
       }
