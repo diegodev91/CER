@@ -1,120 +1,189 @@
 import React from 'react';
-import { Play, Users, Calendar, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Play, Users, Star, Calendar, Youtube, Heart } from 'lucide-react';
 
 const Home = () => {
+  const stats = [
+    { label: 'CerRanos', value: '50K+', icon: Users, color: 'text-blue-600' },
+    { label: 'Episodios', value: '100+', icon: Play, color: 'text-green-600' },
+    { label: 'Años al aire', value: '3+', icon: Calendar, color: 'text-purple-600' },
+    { label: 'Reels', value: '200+', icon: Star, color: 'text-yellow-600' },
+  ];
+
+  const features = [
+    {
+      title: '📺 Episodios Completos',
+      description: 'Disfruta de todos los episodios de CER directamente desde YouTube en nuestra plataforma.',
+      link: '/episodes',
+      icon: Play,
+      color: 'bg-blue-500'
+    },
+    {
+      title: '🎬 Reels Exclusivos',
+      description: 'Los mejores momentos, bloopers y contenido exclusivo en formato corto.',
+      link: '/reels',
+      icon: Star,
+      color: 'bg-yellow-500'
+    },
+    {
+      title: '📰 Noticias CerRanos',
+      description: 'Mantente al día con las últimas noticias y actualizaciones del programa.',
+      link: '/news',
+      icon: Calendar,
+      color: 'bg-green-500'
+    },
+    {
+      title: '🛒 Tienda Oficial',
+      description: 'Merchandising exclusivo para la comunidad CerRanos.',
+      link: '/shop',
+      icon: Heart,
+      color: 'bg-red-500'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-cer-green-800 to-cer-green-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div className="relative bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white">
+        <div className="absolute inset-0 bg-black opacity-20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
+            <div className="mb-6">
+              <div className="inline-flex items-center space-x-3 mb-4">
+                <Youtube className="h-12 w-12 text-red-400" />
+                <div className="text-left">
+                  <p className="text-lg font-medium text-green-100">En RORO Network</p>
+                  <p className="text-sm text-green-200">Canal de YouTube Oficial</p>
+                </div>
+              </div>
+            </div>
+            
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               CER - Cuidando el Rancho
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-cer-green-100 max-w-3xl mx-auto">
-              El programa de televisión favorito de la familia. Únete a nosotros en cada episodio 
-              lleno de aventuras, risas y momentos inolvidables en el rancho.
+            
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-green-100">
+              El programa de YouTube favorito de la familia. 
+              Únete a la comunidad <span className="font-bold text-yellow-300">CerRanos</span> y 
+              disfruta del mejor contenido rural y familiar.
             </p>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-cer-green-800 px-8 py-3 rounded-lg font-semibold hover:bg-cer-green-50 transition-colors flex items-center justify-center space-x-2">
-                <Play className="h-5 w-5" />
-                <span>Ver Último Episodio</span>
-              </button>
-              <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-cer-green-800 transition-colors">
-                Conoce el Cast
-              </button>
+              <Link
+                to="/episodes"
+                className="inline-flex items-center px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+              >
+                <Youtube className="h-5 w-5 mr-2" />
+                Ver Episodios
+              </Link>
+              <Link
+                to="/reels"
+                className="inline-flex items-center px-8 py-4 bg-white text-green-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
+              >
+                <Star className="h-5 w-5 mr-2" />
+                Reels Destacados
+              </Link>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Featured Episodes */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Episodios Destacados</h2>
-            <p className="text-lg text-gray-600">No te pierdas los episodios más populares</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Episode placeholders */}
-            {[1, 2, 3].map((episode) => (
-              <div key={episode} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-video bg-cer-green-100 flex items-center justify-center">
-                  <Play className="h-12 w-12 text-cer-green-600" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Episodio {episode}</h3>
-                  <p className="text-gray-600 mb-4">
-                    Una nueva aventura en el rancho que no te puedes perder. 
-                    Llena de diversión y momentos emotivos.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Temporada 1</span>
-                    <div className="flex items-center space-x-1">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm text-gray-600">4.8</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Stats Section */}
-      <section className="bg-cer-green-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold mb-2">150+</div>
-              <div className="text-cer-green-200">Episodios</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">5</div>
-              <div className="text-cer-green-200">Temporadas</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">1M+</div>
-              <div className="text-cer-green-200">Seguidores</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">4.9</div>
-              <div className="text-cer-green-200">Rating Promedio</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Latest News */}
-      <section className="py-16 bg-gray-50">
+      <div className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Últimas Noticias</h2>
-            <p className="text-lg text-gray-600">Mantente al día con todo lo que pasa en el rancho</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              La Comunidad CerRanos
+            </h2>
+            <p className="text-lg text-gray-600">
+              Unidos por la pasión del campo y la familia
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* News placeholders */}
-            {[1, 2, 3].map((news) => (
-              <div key={news} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-video bg-gray-200"></div>
-                <div className="p-6">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <Calendar className="h-4 w-4 text-gray-400" />
-                    <span className="text-sm text-gray-500">Hace 2 días</span>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="flex justify-center mb-4">
+                  <div className={`p-3 rounded-full bg-gray-100 ${stat.color}`}>
+                    <stat.icon className="h-8 w-8" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Noticia Importante {news}</h3>
-                  <p className="text-gray-600">
-                    Entérate de las últimas novedades del programa y del equipo de producción.
-                  </p>
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-gray-600">
+                  {stat.label}
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Features Section */}
+      <div className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              ¿Qué encontrarás aquí?
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Tu plataforma completa para disfrutar de todo el contenido de 
+              Cuidando el Rancho y conectar con otros CerRanos
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <Link
+                key={index}
+                to={feature.link}
+                className="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 p-6"
+              >
+                <div className={`inline-flex p-3 rounded-lg ${feature.color} text-white mb-4`}>
+                  <feature.icon className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-green-600 transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600">
+                  {feature.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="py-16 bg-green-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            ¡Únete a la Familia CerRanos!
+          </h2>
+          <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
+            Suscríbete a nuestro canal de YouTube y no te pierdas ningún episodio 
+            de las aventuras en el rancho.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://youtube.com/@roronetwork"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+            >
+              <Youtube className="h-5 w-5 mr-2" />
+              Suscribirse en YouTube
+            </a>
+            <Link
+              to="/about"
+              className="inline-flex items-center px-8 py-4 bg-white text-green-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
+            >
+              Conoce más sobre CER
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

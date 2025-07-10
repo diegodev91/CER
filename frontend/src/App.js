@@ -11,6 +11,7 @@ import Footer from './components/common/Footer/Footer';
 import Home from './components/pages/Home/Home';
 import Episodes from './components/pages/Episodes/Episodes';
 import EpisodeDetail from './components/pages/Episodes/EpisodeDetail';
+import Reels from './components/pages/Reels/Reels';
 import News from './components/pages/News/News';
 import NewsDetail from './components/pages/News/NewsDetail';
 import Shop from './components/pages/Shop/Shop';
@@ -42,6 +43,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/episodes" element={<Episodes />} />
               <Route path="/episodes/:id" element={<EpisodeDetail />} />
+              <Route path="/reels" element={<Reels />} />
               <Route path="/news" element={<News />} />
               <Route path="/news/:slug" element={<NewsDetail />} />
               <Route path="/shop" element={<Shop />} />

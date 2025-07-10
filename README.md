@@ -1,6 +1,17 @@
 # CER - Cuidando el Rancho
 
-Web application for the CER (Cuidando el Rancho) TV show from RORO network.
+Una aplicación web moderna para el programa de YouTube "Cuidando el Rancho" de RORO Network. Una plataforma completa para los **CerRanos** con episodios embebidos, reels, noticias y merchandise oficial.
+
+## 🎬 Acerca del Programa
+
+**CER - Cuidando el Rancho** es un programa de YouTube que se transmite en el canal **RORO Network**. Nuestra comunidad de seguidores se llama cariñosamente **"CerRanos"** y esta plataforma web está diseñada especialmente para ellos.
+
+### Funcionalidades principales:
+- 📺 **Episodios de YouTube embebidos** - Ver todos los episodios directamente en la web
+- 🎥 **Reels y contenido corto** - Los mejores momentos en formato corto
+- 📰 **Noticias y actualizaciones** - Últimas novedades del programa
+- 🛒 **Tienda CerRanos** - Merchandise oficial exclusivo
+- 💬 **Comunidad** - Interacción entre CerRanos
 
 ## 🚀 Quick Start
 
