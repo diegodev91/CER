@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const { sequelize } = require('./config/database');
+const { resourceMonitor, startMemoryMonitoring } = require('./middleware/resourceMonitor');
 
 // Import routes
 const episodeRoutes = require('./routes/episodes');
@@ -18,10 +19,26 @@ const reelRoutes = require('./routes/reels');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Rate limiting
+// Rate limiting - More restrictive for free tier
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 50, // Reduced from 100 to 50 requests per 15 minutes
+  message: {
+    error: 'Too many requests from this IP, please try again later.',
+    retryAfter: 15 * 60 // seconds
+  },
+  standardHeaders: true, // Return rate limit info in headers
+  legacyHeaders: false,
+});
+
+// Stricter rate limiting for resource-intensive endpoints
+const strictLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 10, // 10 requests per 5 minutes for uploads/admin
+  message: {
+    error: 'Rate limit exceeded for this operation. Please try again later.',
+    retryAfter: 5 * 60
+  }
 });
 
 // CORS configuration for Azure deployment
@@ -43,21 +60,31 @@ const corsOptions = {
 app.use(helmet());
 app.use(cors(corsOptions));
 app.use(morgan('combined'));
+app.use(resourceMonitor); // Add resource monitoring
 app.use(limiter);
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '5mb' })); // Reduced from 10mb to 5mb
+app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
-// Health check endpoint
+// Health check endpoint with resource info
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'CER API is running' });
+  const { checkMemoryUsage } = require('./middleware/resourceMonitor');
+  const memoryUsage = checkMemoryUsage();
+  
+  res.json({ 
+    status: 'OK', 
+    message: 'CER API is running',
+    memory: memoryUsage,
+    uptime: process.uptime(),
+    nodeVersion: process.version
+  });
 });
 
-// Routes
+// Routes with rate limiting
 app.use('/api/episodes', episodeRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/shop', shopRoutes);
 app.use('/api/comments', commentRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/admin', strictLimiter, adminRoutes); // Apply strict limits to admin routes
 app.use('/api/reels', reelRoutes);
 
 // Error handling middleware
@@ -87,6 +114,10 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`🚀 CER Backend server running on port ${PORT}`);
       console.log(`📍 API Health: http://localhost:${PORT}/api/health`);
+      
+      // Start memory monitoring
+      startMemoryMonitoring();
+      console.log('📊 Resource monitoring started');
     });
   } catch (error) {
     console.error('❌ Unable to start server:', error);

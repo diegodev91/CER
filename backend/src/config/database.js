@@ -11,10 +11,10 @@ const sequelize = new Sequelize(
     dialect: process.env.DB_DIALECT || 'postgres',
     logging: process.env.NODE_ENV === 'development' ? console.log : false,
     pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
+      max: parseInt(process.env.DB_POOL_MAX) || 5, // Max connections
+      min: parseInt(process.env.DB_POOL_MIN) || 0, // Min connections
+      acquire: parseInt(process.env.DB_POOL_ACQUIRE) || 30000, // Max time to acquire connection
+      idle: parseInt(process.env.DB_POOL_IDLE) || 10000 // Max idle time
     },
     dialectOptions: process.env.DB_DIALECT === 'mssql' ? {
       options: {
