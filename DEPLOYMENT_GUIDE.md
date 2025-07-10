@@ -22,29 +22,38 @@ Your CER project is already deployed in Azure with these resources:
 
 ---
 
-## 🔄 **Step 2: Update Deployment**
+## 🔄 **Step 2: Automatic CI/CD Deployment**
 
-### 2.1 Check Current Deployment Status
+### ✅ **CI/CD Already Configured!**
+
+Your project is set up for **automatic deployment** when you push to GitHub:
+
+**Frontend (Static Web App):**
+- ✅ Connected to GitHub repository
+- ✅ Automatically builds and deploys on every `git push` to `main`
+- ✅ GitHub Actions workflow: `.github/workflows/azure-static-web-apps-gray-stone-00b286e10.yml`
+
+**Backend (Container App):**
+- ✅ GitHub Actions workflow: `.github/workflows/azure-container-app-backend.yml`
+- ✅ Automatically builds Docker image and deploys on backend changes
+
+### 2.1 How CI/CD Works
 ```bash
-# Check Static Web App status
-az staticwebapp show --name cer-frontend --resource-group rg-cer-prod
+# Simply push your changes - deployment happens automatically!
+git add .
+git commit -m "Your changes"
+git push origin main
 
-# Check Container App status
-az containerapp show --name cer-backend --resource-group rg-cer-prod
-
-# Check SQL Database status
-az sql db show --name cerdb --server cer-sql-server-2025 --resource-group rg-cer-prod
+# GitHub Actions will:
+# 1. Build your frontend and deploy to Static Web App
+# 2. Build Docker image for backend and deploy to Container App
+# 3. Everything is live within 2-3 minutes!
 ```
 
-### 2.2 Deploy Latest Changes
-Since your code is pushed to GitHub, Azure will automatically deploy if connected to your repository, or you can trigger manual deployment:
-
+### 2.2 Manual Deployment (if needed)
 ```bash
-# Update Container App with latest image
+# Only if you need to manually trigger deployment
 az containerapp update --name cer-backend --resource-group rg-cer-prod
-
-# Update Static Web App (if not auto-deploying)
-az staticwebapp deploy --name cer-frontend --resource-group rg-cer-prod --source .
 ```
 
 ---
@@ -159,13 +168,26 @@ az sql db show-usage --name cerdb --server cer-sql-server-2025 --resource-group 
 
 ## 🚀 **Quick Deploy Command**
 
-To deploy your latest changes:
+**The easiest way to deploy your changes:**
 
 ```bash
-# Ensure you're logged into Azure
-az login
+# That's it! Just push to GitHub and everything deploys automatically
+git add .
+git commit -m "Your latest changes"
+git push origin main
 
-# Deploy latest changes (if auto-deploy is not configured)
+# 🎉 Your changes will be live in 2-3 minutes!
+# - Frontend: Deployed via GitHub Actions to Static Web App
+# - Backend: Built as Docker image and deployed to Container App
+```
+
+### Manual Commands (if needed)
+```bash
+# Check deployment status
+az staticwebapp show --name cer-frontend --resource-group rg-cer-prod --query "defaultHostname"
+az containerapp show --name cer-backend --resource-group rg-cer-prod --query "properties.latestRevisionName"
+
+# Manual backend update (rarely needed)
 az containerapp update --name cer-backend --resource-group rg-cer-prod
 ```
 
