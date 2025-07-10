@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Play, Users, Star, Calendar, Youtube, Heart, ArrowRight } from 'lucide-react';
 import YouTubeEmbed from '../../common/YouTubeEmbed/YouTubeEmbed';
+import YouTubePlaylist from '../../common/YouTubePlaylist/YouTubePlaylist';
+import YouTubeShorts from '../../common/YouTubeShorts/YouTubeShorts';
 
 const Home = () => {
   const [featuredEpisode, setFeaturedEpisode] = useState(null);
   const [featuredReels, setFeaturedReels] = useState([]);
+  const [allEpisodes, setAllEpisodes] = useState([]);
+  const [allReels, setAllReels] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,12 +29,30 @@ const Home = () => {
         }
       }
 
+      // Fetch all episodes for playlist
+      const allEpisodesResponse = await fetch('/api/episodes?limit=10');
+      if (allEpisodesResponse.ok) {
+        const allEpisodesData = await allEpisodesResponse.json();
+        if (allEpisodesData.success) {
+          setAllEpisodes(allEpisodesData.data);
+        }
+      }
+
       // Fetch featured reels
-      const reelsResponse = await fetch('/api/reels/featured?limit=3');
+      const reelsResponse = await fetch('/api/reels/featured?limit=6');
       if (reelsResponse.ok) {
         const reelsData = await reelsResponse.json();
         if (reelsData.success) {
           setFeaturedReels(reelsData.data);
+        }
+      }
+
+      // Fetch all reels for shorts section
+      const allReelsResponse = await fetch('/api/reels?limit=8');
+      if (allReelsResponse.ok) {
+        const allReelsData = await allReelsResponse.json();
+        if (allReelsData.success) {
+          setAllReels(allReelsData.data);
         }
       }
     } catch (error) {
@@ -247,6 +269,55 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YouTube Playlist Section */}
+      {!loading && allEpisodes.length > 0 && (
+        <div className="py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <YouTubePlaylist
+              playlistId="PLQovf0jBx8pRPepxCD9rjsQOXsS8grL2K"
+              title="🎬 Todos los Episodios de CER"
+              description="La lista completa de episodios de Cuidando el Rancho en nuestro canal oficial"
+              videos={allEpisodes}
+              showVideoList={true}
+              maxVideosToShow={5}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* YouTube Shorts Section */}
+      {!loading && allReels.length > 0 && (
+        <div className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                🎬 CER Shorts & Reels
+              </h2>
+              <p className="text-lg text-gray-600">
+                Los mejores momentos del programa en formato corto
+              </p>
+            </div>
+            
+            <YouTubeShorts
+              shorts={allReels}
+              title=""
+              showGrid={true}
+              columns={4}
+            />
+            
+            <div className="text-center mt-8">
+              <Link
+                to="/reels"
+                className="inline-flex items-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
+              >
+                Ver todos los Reels
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
             </div>
           </div>
         </div>
