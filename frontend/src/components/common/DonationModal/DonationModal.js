@@ -90,49 +90,9 @@ const DonationModal = () => {
                     <p className="text-xs text-gray-500">QR Code no disponible</p>
                   </div>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm text-gray-600">
                   Escanea el código QR con tu app de pagos favorita
                 </p>
-                
-                {/* Phone Number for Yape/Plin */}
-                {donationInfo.phone && (
-                  <div className="bg-white rounded-lg p-3 border border-gray-200 mb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="text-center flex-1">
-                        <p className="text-xs text-gray-500 mb-1">Número para Yape/Plin:</p>
-                        <span className="text-lg font-mono font-semibold text-gray-800">
-                          {donationInfo.phone}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => copyToClipboard(donationInfo.phone)}
-                        className="ml-2 text-green-600 hover:text-green-700 transition-colors"
-                        title="Copiar número"
-                      >
-                        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                      </button>
-                    </div>
-                  </div>
-                )}
-                
-                {/* Wallet Address (if applicable) */}
-                <div className="bg-white rounded-lg p-3 border border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <p className="text-xs text-gray-500 mb-1">ID de donación:</p>
-                      <span className="text-xs text-gray-600 font-mono truncate block">
-                        {donationInfo.walletAddress}
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => copyToClipboard(donationInfo.walletAddress)}
-                      className="ml-2 text-green-600 hover:text-green-700 transition-colors"
-                      title="Copiar ID"
-                    >
-                      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                    </button>
-                  </div>
-                </div>
               </div>
 
               {/* Payment Methods */}
