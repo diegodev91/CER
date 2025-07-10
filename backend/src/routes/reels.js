@@ -25,9 +25,27 @@ router.get('/', async (req, res) => {
       order: [['publishedAt', 'DESC'], ['createdAt', 'DESC']]
     });
 
+    // Ensure tags are properly parsed as arrays
+    const processedReels = reels.rows.map(reel => {
+      const reelData = reel.toJSON();
+      // Parse tags if they're a string
+      if (typeof reelData.tags === 'string') {
+        try {
+          reelData.tags = JSON.parse(reelData.tags);
+        } catch (e) {
+          reelData.tags = [];
+        }
+      }
+      // Ensure tags is always an array
+      if (!Array.isArray(reelData.tags)) {
+        reelData.tags = [];
+      }
+      return reelData;
+    });
+
     res.json({
       success: true,
-      data: reels.rows,
+      data: processedReels,
       pagination: {
         currentPage: parseInt(page),
         totalPages: Math.ceil(reels.count / limit),
@@ -58,9 +76,27 @@ router.get('/featured', async (req, res) => {
       limit: 6
     });
 
+    // Ensure tags are properly parsed as arrays
+    const processedReels = featuredReels.map(reel => {
+      const reelData = reel.toJSON();
+      // Parse tags if they're a string
+      if (typeof reelData.tags === 'string') {
+        try {
+          reelData.tags = JSON.parse(reelData.tags);
+        } catch (e) {
+          reelData.tags = [];
+        }
+      }
+      // Ensure tags is always an array
+      if (!Array.isArray(reelData.tags)) {
+        reelData.tags = [];
+      }
+      return reelData;
+    });
+
     res.json({
       success: true,
-      data: featuredReels
+      data: processedReels
     });
   } catch (error) {
     console.error('Error fetching featured reels:', error);
@@ -119,9 +155,22 @@ router.get('/:id', async (req, res) => {
     // Incrementar contador de vistas
     await reel.increment('viewCount');
 
+    // Process reel data to ensure tags are arrays
+    const reelData = reel.toJSON();
+    if (typeof reelData.tags === 'string') {
+      try {
+        reelData.tags = JSON.parse(reelData.tags);
+      } catch (e) {
+        reelData.tags = [];
+      }
+    }
+    if (!Array.isArray(reelData.tags)) {
+      reelData.tags = [];
+    }
+
     res.json({
       success: true,
-      data: reel
+      data: reelData
     });
   } catch (error) {
     console.error('Error fetching reel:', error);

@@ -23,9 +23,27 @@ router.get('/', async (req, res) => {
       offset: offset
     });
 
+    // Ensure tags are properly parsed as arrays
+    const processedEpisodes = episodes.rows.map(episode => {
+      const episodeData = episode.toJSON();
+      // Parse tags if they're a string
+      if (typeof episodeData.tags === 'string') {
+        try {
+          episodeData.tags = JSON.parse(episodeData.tags);
+        } catch (e) {
+          episodeData.tags = [];
+        }
+      }
+      // Ensure tags is always an array
+      if (!Array.isArray(episodeData.tags)) {
+        episodeData.tags = [];
+      }
+      return episodeData;
+    });
+
     res.json({
       success: true,
-      data: episodes.rows,
+      data: processedEpisodes,
       totalCount: episodes.count,
       currentPage: parseInt(page),
       totalPages: Math.ceil(episodes.count / limit)
@@ -52,6 +70,19 @@ router.get('/:id', async (req, res) => {
     // Increment view count
     await episode.increment('viewCount');
 
+    // Process episode data to ensure tags are arrays
+    const episodeData = episode.toJSON();
+    if (typeof episodeData.tags === 'string') {
+      try {
+        episodeData.tags = JSON.parse(episodeData.tags);
+      } catch (e) {
+        episodeData.tags = [];
+      }
+    }
+    if (!Array.isArray(episodeData.tags)) {
+      episodeData.tags = [];
+    }
+
     // Get approved comments for this episode
     const comments = await Comment.findAll({
       where: { 
@@ -63,7 +94,7 @@ router.get('/:id', async (req, res) => {
     });
 
     res.json({
-      episode,
+      episode: episodeData,
       comments
     });
   } catch (error) {

@@ -189,7 +189,7 @@ const Episodes = () => {
                     </div>
                     
                     {/* Tags */}
-                    {episode.tags && episode.tags.length > 0 && (
+                    {episode.tags && Array.isArray(episode.tags) && episode.tags.length > 0 && (
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-2">
                           {episode.tags.map((tag, index) => (
