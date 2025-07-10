@@ -64,7 +64,11 @@ app.use(cors(corsOptions));
 app.use(morgan('combined'));
 app.use(connectionLimiter(parseInt(process.env.MAX_CONCURRENT_REQUESTS) || 50));
 app.use(circuitBreakerMiddleware);
-app.use(...requestTimeout(parseInt(process.env.REQUEST_TIMEOUT) || 30000));
+
+// Apply timeout middleware (returns an array of middleware)
+const timeoutMiddlewares = requestTimeout(parseInt(process.env.REQUEST_TIMEOUT) || 30000);
+timeoutMiddlewares.forEach(middleware => app.use(middleware));
+
 app.use(resourceMonitor); // Add resource monitoring
 app.use(limiter);
 app.use(express.json({ limit: '5mb' })); // Reduced from 10mb to 5mb
