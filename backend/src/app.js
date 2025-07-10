@@ -24,9 +24,24 @@ const limiter = rateLimit({
   max: 100 // limit each IP to 100 requests per windowMs
 });
 
+// CORS configuration for Azure deployment
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'https://www.cuidando-el-rancho.com',
+    'https://cuidando-el-rancho.com',
+    'https://gray-stone-00b286e10.1.azurestaticapps.net',
+    'https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io',
+    process.env.FRONTEND_URL
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan('combined'));
 app.use(limiter);
 app.use(express.json({ limit: '10mb' }));

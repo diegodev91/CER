@@ -9,7 +9,7 @@ const DonationModal = () => {
   const donationInfo = {
     qrImageUrl: '/images/donation-qr.png', // QR code image (you can replace this)
     walletAddress: 'CER-YAPE-PLIN-91234567', // Example wallet/phone number
-    message: '¡Gracias por apoyar a Cuidando el Rancho! 💚',
+    message: 'Apoya a tu comunidad de CERranos 💚',
     phone: '912-345-678', // For Yape/Plin
     methods: [
       { name: 'Yape', icon: '📱', color: 'bg-purple-500', description: 'Código QR o teléfono' },
@@ -68,22 +68,14 @@ const DonationModal = () => {
                   {donationInfo.message}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Tu apoyo nos ayuda a seguir creando contenido de calidad para toda la comunidad CerRanos.
+                  Tu apoyo nos ayuda a seguir creando contenido de calidad para toda la comunidad CERranos.
                 </p>
               </div>
 
               {/* QR Code */}
               <div className="bg-gray-50 rounded-lg p-6 text-center mb-6">
                 <div className="w-48 h-48 mx-auto mb-4 bg-white rounded-lg shadow-inner flex items-center justify-center border-2 border-dashed border-gray-300">
-                  {/* QR Code Placeholder */}
-                  <div className="text-center">
-                    <QrCode className="h-24 w-24 text-gray-400 mx-auto mb-2" />
-                    <p className="text-xs text-gray-500">
-                      Código QR para<br />donaciones
-                    </p>
-                  </div>
-                  {/* 
-                  Replace this with actual QR code when you have the image:
+                  {/* Actual QR Code */}
                   <img 
                     src={donationInfo.qrImageUrl} 
                     alt="QR Code para donación" 
@@ -97,7 +89,6 @@ const DonationModal = () => {
                     <QrCode className="h-24 w-24 text-gray-400 mx-auto mb-2" />
                     <p className="text-xs text-gray-500">QR Code no disponible</p>
                   </div>
-                  */}
                 </div>
                 <p className="text-sm text-gray-600 mb-3">
                   Escanea el código QR con tu app de pagos favorita
@@ -170,7 +161,7 @@ const DonationModal = () => {
               {/* Thank You Note */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
                 <p className="text-green-800 text-sm">
-                  <span className="font-semibold">¡Muchas gracias!</span> Cada donación nos ayuda a mejorar el programa y crear más contenido para la comunidad CerRanos.
+                  <span className="font-semibold">¡Muchas gracias!</span> Cada donación nos ayuda a mejorar el programa y crear más contenido para la comunidad CERranos.
                 </p>
               </div>
             </div>
