@@ -1,170 +1,121 @@
-# CER Deployment Guide - Vercel + Railway
+# CER Deployment Guide - Azure Cloud
 
 ## 🚀 Quick Deployment Steps
 
 ### Prerequisites
 - GitHub account
-- Vercel account (free)
-- Railway account (free)
+- Azure account with active subscription
+- Azure CLI installed
 
 ---
 
-## 📦 **Step 1: Prepare Your Code**
+## 📦 **Step 1: Deploy to Azure**
 
-### 1.1 Initialize Git Repository
+Your CER project is already deployed in Azure with these resources:
+
+### Azure Resources (Resource Group: `rg-cer-prod`)
+- **Frontend**: Azure Static Web App (`cer-frontend`)
+- **Backend**: Azure Container App (`cer-backend`)
+- **Database**: Azure SQL Database (`cer-sql-server-2025/cerdb`)
+- **Container Registry**: `cerregistry2025`
+- **Managed Environment**: `cer-env`
+
+---
+
+## 🔄 **Step 2: Update Deployment**
+
+### 2.1 Check Current Deployment Status
 ```bash
-cd /Users/diegodev91/Projects/CER
-git init
-git add .
-git commit -m "Initial commit: CER project setup"
+# Check Static Web App status
+az staticwebapp show --name cer-frontend --resource-group rg-cer-prod
+
+# Check Container App status
+az containerapp show --name cer-backend --resource-group rg-cer-prod
+
+# Check SQL Database status
+az sql db show --name cerdb --server cer-sql-server-2025 --resource-group rg-cer-prod
 ```
 
-### 1.2 Create GitHub Repository
-```bash
-# Create a new repository on GitHub named 'cer-cuidando-el-rancho'
-git remote add origin https://github.com/YOUR_USERNAME/cer-cuidando-el-rancho.git
-git branch -M main
-git push -u origin main
-```
-
----
-
-## 🌐 **Step 2: Deploy Frontend to Vercel**
-
-### 2.1 Deploy via Vercel Dashboard
-1. Go to [vercel.com](https://vercel.com)
-2. Sign in with GitHub
-3. Click "New Project"
-4. Import your `cer-cuidando-el-rancho` repository
-5. Configure project:
-   - **Framework Preset**: Create React App
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `build`
-   - **Install Command**: `npm install`
-
-### 2.2 Or Deploy via CLI
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy frontend
-cd frontend
-vercel --prod
-
-# Follow the prompts:
-# - Link to existing project? N
-# - Project name: cer-frontend
-# - Directory: ./
-# - Settings confirmed? Y
-```
-
-### 2.3 Environment Variables (Add in Vercel Dashboard)
-```
-REACT_APP_API_URL=https://your-railway-backend.railway.app/api
-REACT_APP_ENVIRONMENT=production
-```
-
----
-
-## 🚂 **Step 3: Deploy Backend to Railway**
-
-### 3.1 Deploy via Railway Dashboard
-1. Go to [railway.app](https://railway.app)
-2. Sign in with GitHub
-3. Click "New Project"
-4. Select "Deploy from GitHub repo"
-5. Choose your `cer-cuidando-el-rancho` repository
-6. Configure:
-   - **Root Directory**: `backend`
-   - **Start Command**: `npm start`
-
-### 3.2 Add PostgreSQL Database
-1. In Railway dashboard, click "+ New"
-2. Select "PostgreSQL"
-3. Railway will provision a database automatically
-
-### 3.3 Environment Variables (Add in Railway Dashboard)
-```
-NODE_ENV=production
-PORT=${{ PORT }}
-DB_HOST=${{ POSTGRES_HOST }}
-DB_PORT=${{ POSTGRES_PORT }}
-DB_NAME=${{ POSTGRES_DB }}
-DB_USER=${{ POSTGRES_USER }}
-DB_PASSWORD=${{ POSTGRES_PASSWORD }}
-JWT_SECRET=your_super_secret_jwt_key_here_make_it_long_and_random
-FRONTEND_URL=https://your-vercel-app.vercel.app
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-```
-
----
-
-## ⚙️ **Step 4: Configure CORS and Environment**
-
-### 4.1 Update Backend CORS Configuration
-The backend is already configured to use `process.env.FRONTEND_URL` for CORS.
-
-### 4.2 Update Frontend API Configuration
-Create or update `frontend/src/config/api.js`:
-
-```javascript
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-
-export const apiConfig = {
-  baseURL: API_BASE_URL,
-  timeout: 10000,
-};
-
-export default API_BASE_URL;
-```
-
----
-
-## 📊 **Step 5: Verify Deployment**
-
-### 5.1 Check Frontend
-- Visit your Vercel URL
-- Verify all pages load correctly
-- Check browser console for errors
-
-### 5.2 Check Backend
-- Visit `https://your-railway-backend.railway.app/api/health`
-- Should return: `{"status":"OK","message":"CER API is running"}`
-
-### 5.3 Check Database Connection
-- Railway will show database connection status
-- Backend logs should show "Database connected successfully"
-
----
-
-## 🔧 **Step 6: Custom Domains (Optional)**
-
-### 6.1 Frontend Domain (Vercel)
-1. Go to Project Settings → Domains
-2. Add your custom domain
-3. Configure DNS records as instructed
-
-### 6.2 Backend Domain (Railway)
-1. Go to your service → Settings → Domains
-2. Add custom domain
-3. Configure DNS records
-
----
-
-## 🚀 **Step 7: Continuous Deployment**
-
-Both platforms automatically deploy when you push to your main branch:
+### 2.2 Deploy Latest Changes
+Since your code is pushed to GitHub, Azure will automatically deploy if connected to your repository, or you can trigger manual deployment:
 
 ```bash
-# Make changes to your code
-git add .
-git commit -m "Add new feature"
-git push origin main
+# Update Container App with latest image
+az containerapp update --name cer-backend --resource-group rg-cer-prod
 
-# Vercel and Railway will automatically deploy the changes
+# Update Static Web App (if not auto-deploying)
+az staticwebapp deploy --name cer-frontend --resource-group rg-cer-prod --source .
+```
+
+---
+
+## ⚙️ **Step 3: Environment Configuration**
+
+### 3.1 Frontend Environment Variables (Static Web App)
+```bash
+az staticwebapp appsettings set --name cer-frontend --resource-group rg-cer-prod --setting-names \
+  REACT_APP_API_URL=https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io/api \
+  REACT_APP_ENVIRONMENT=production
+```
+
+### 3.2 Backend Environment Variables (Container App)
+```bash
+az containerapp update --name cer-backend --resource-group rg-cer-prod --set-env-vars \
+  NODE_ENV=production \
+  FRONTEND_URL=https://gray-stone-00b286e10.1.azurestaticapps.net \
+  DB_HOST=cer-sql-server-2025.database.windows.net \
+  DB_NAME=cerdb \
+  JWT_SECRET=your_jwt_secret_here
+```
+
+---
+
+## 📊 **Step 4: Verify Deployment**
+
+### 4.1 Check Frontend
+```bash
+# Get Static Web App URL
+az staticwebapp show --name cer-frontend --resource-group rg-cer-prod --query defaultHostname
+```
+
+### 4.2 Check Backend
+```bash
+# Get Container App URL
+az containerapp show --name cer-backend --resource-group rg-cer-prod --query properties.configuration.ingress.fqdn
+
+# Test health endpoint
+curl https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io/api/health
+```
+
+### 4.3 Check Database
+```bash
+# Check database connection
+az sql db show --name cerdb --server cer-sql-server-2025 --resource-group rg-cer-prod --query status
+```
+
+---
+
+## 🌐 **Step 5: Custom Domain Setup**
+
+Follow the instructions in `CUSTOM_DOMAIN_SETUP.md` to configure your custom domain `cuidando-el-rancho.com`.
+
+---
+
+## 🔧 **Step 6: Monitoring and Logs**
+
+### 6.1 View Container App Logs
+```bash
+az containerapp logs show --name cer-backend --resource-group rg-cer-prod --follow
+```
+
+### 6.2 View Static Web App Deployment History
+```bash
+az staticwebapp show --name cer-frontend --resource-group rg-cer-prod
+```
+
+### 6.3 Monitor Database Performance
+```bash
+az sql db show-usage --name cerdb --server cer-sql-server-2025 --resource-group rg-cer-prod
 ```
 
 ---
@@ -172,52 +123,50 @@ git push origin main
 ## 💡 **Pro Tips**
 
 ### Performance Optimization
-1. **Enable Vercel Analytics** (free tier available)
-2. **Use Railway's metrics** to monitor backend performance
-3. **Set up Vercel Edge Functions** for better global performance
-
-### Monitoring
-1. **Vercel**: Built-in analytics and performance monitoring
-2. **Railway**: Built-in logs and metrics
-3. **Consider adding**: Sentry for error tracking
+1. **Azure CDN**: Consider adding CDN for global performance
+2. **Application Insights**: Monitor application performance
+3. **Auto-scaling**: Container Apps automatically scale based on load
 
 ### Cost Management
-- **Vercel**: Free tier includes 100GB bandwidth/month
-- **Railway**: $5/month after free trial, includes PostgreSQL
-- **Total MVP cost**: ~$5-10/month
+- **Azure Cost Management**: Monitor spending in Azure portal
+- **Resource optimization**: Scale down non-production resources
+- **Reserved instances**: Consider for long-term cost savings
 
 ---
 
 ## 🔐 **Security Checklist**
 
-- ✅ Environment variables set correctly
-- ✅ CORS configured properly
-- ✅ Database credentials secured
-- ✅ JWT secret is strong and random
-- ✅ HTTPS enabled (automatic with both platforms)
+- ✅ Environment variables secured in Azure Key Vault (recommended)
+- ✅ CORS configured properly in Container App
+- ✅ SQL Database firewall rules configured
+- ✅ HTTPS enabled (automatic with Azure)
+- ✅ Container registry access controlled
 
 ---
 
-## 📞 **Support & Next Steps**
+## 🎯 **Current URLs**
 
-### If you encounter issues:
-1. Check Railway logs for backend issues
-2. Check Vercel function logs for frontend issues
-3. Verify environment variables are set correctly
-4. Test API endpoints individually
+- **Frontend**: https://gray-stone-00b286e10.1.azurestaticapps.net
+- **Backend**: https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io
+- **API Health**: https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io/api/health
 
-### Future scaling:
-1. **Database**: Upgrade Railway PostgreSQL plan
-2. **CDN**: Vercel automatically provides global CDN
-3. **Backend**: Railway auto-scales within plan limits
-4. **Monitoring**: Add application monitoring tools
+### After Custom Domain Setup:
+- **Frontend**: https://www.cuidando-el-rancho.com
+- **Backend**: https://api.cuidando-el-rancho.com
+- **API Health**: https://api.cuidando-el-rancho.com/api/health
 
 ---
 
-## 🎯 **Expected URLs After Deployment**
+## 🚀 **Quick Deploy Command**
 
-- **Frontend**: `https://cer-frontend.vercel.app`
-- **Backend**: `https://cer-backend.railway.app`
-- **API Health**: `https://cer-backend.railway.app/api/health`
+To deploy your latest changes:
 
-Your CER website will be live and ready for users! 🎉
+```bash
+# Ensure you're logged into Azure
+az login
+
+# Deploy latest changes (if auto-deploy is not configured)
+az containerapp update --name cer-backend --resource-group rg-cer-prod
+```
+
+Your CER website is live on Azure! 🎉

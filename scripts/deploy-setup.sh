@@ -1,14 +1,28 @@
 #!/bin/bash
 
-# CER Project Deployment Script
-# This script prepares and deploys your CER project to Vercel + Railway
+# CER Project Deployment Script - Azure
+# This script prepares and deploys your CER project to Azure
 
-echo "🚀 CER Deployment Setup"
-echo "======================="
+echo "🚀 CER Azure Deployment Setup"
+echo "============================="
 
 # Check if we're in the right directory
 if [ ! -f "package.json" ]; then
     echo "❌ Please run this script from the CER project root directory"
+    exit 1
+fi
+
+# Check if Azure CLI is installed
+if ! command -v az &> /dev/null; then
+    echo "❌ Azure CLI is not installed. Please install it first:"
+    echo "   https://docs.microsoft.com/en-us/cli/azure/install-azure-cli"
+    exit 1
+fi
+
+# Check Azure login status
+if ! az account show &> /dev/null; then
+    echo "🔐 Please login to Azure first:"
+    echo "   az login"
     exit 1
 fi
 
@@ -27,7 +41,7 @@ fi
 if ! git remote get-url origin > /dev/null 2>&1; then
     echo ""
     echo "🔗 Please add your GitHub repository as origin:"
-    echo "   git remote add origin https://github.com/YOUR_USERNAME/cer-cuidando-el-rancho.git"
+    echo "   git remote add origin https://github.com/YOUR_USERNAME/CER.git"
     echo "   git branch -M main"
     echo "   git push -u origin main"
     echo ""
@@ -47,16 +61,24 @@ cd backend && npm install && cd ..
 
 echo "✅ All dependencies installed"
 
-# Create environment files
-echo "⚙️ Setting up environment files..."
+# Check Azure deployment status
+echo "☁️ Checking Azure deployment status..."
 
-# Backend environment
-if [ ! -f "backend/.env" ]; then
-    cp backend/.env.example backend/.env
-    echo "✅ Created backend/.env from template"
-    echo "⚠️  Please update backend/.env with your database credentials"
+# Check if resource group exists
+if az group show --name rg-cer-prod &> /dev/null; then
+    echo "✅ Azure resource group 'rg-cer-prod' found"
+    
+    # List current resources
+    echo "📋 Current Azure resources:"
+    az resource list --resource-group rg-cer-prod --output table
+    
+    echo ""
+    echo "🔄 To deploy your latest changes:"
+    echo "   az containerapp update --name cer-backend --resource-group rg-cer-prod"
+    echo ""
 else
-    echo "✅ Backend .env already exists"
+    echo "❌ Azure resource group 'rg-cer-prod' not found"
+    echo "   Please ensure your Azure deployment is set up correctly"
 fi
 
 # Display next steps
@@ -65,48 +87,18 @@ echo "🎉 Setup Complete!"
 echo "=================="
 echo ""
 echo "Next steps:"
-echo "1. Update backend/.env with your database credentials"
-echo "2. Push your code to GitHub if not done already"
-echo "3. Deploy frontend to Vercel:"
-echo "   • Go to vercel.com"
-echo "   • Import your GitHub repository"
-echo "   • Set root directory to 'frontend'"
+echo "1. Ensure your code is pushed to GitHub"
+echo "2. Check your Azure deployment status above"
+echo "3. Deploy latest changes:"
+echo "   az containerapp update --name cer-backend --resource-group rg-cer-prod"
 echo ""
-echo "4. Deploy backend to Railway:"
-echo "   • Go to railway.app"
-echo "   • Import your GitHub repository"
-echo "   • Set root directory to 'backend'"
-echo "   • Add PostgreSQL database"
+echo "4. Verify deployment:"
+echo "   Frontend: https://gray-stone-00b286e10.1.azurestaticapps.net"
+echo "   Backend: https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io"
+echo "   Health: https://cer-backend.lemonbeach-6b713b41.eastus.azurecontainerapps.io/api/health"
 echo ""
-echo "5. Configure environment variables on both platforms"
-echo ""
-echo "📖 See DEPLOYMENT_GUIDE.md for detailed instructions"
+echo "📖 See DEPLOYMENT_GUIDE.md for detailed Azure instructions"
+echo "🌐 See CUSTOM_DOMAIN_SETUP.md for custom domain configuration"
 echo ""
 
-# Test local setup
-echo "🧪 Testing local setup..."
-echo "Starting backend server (this will test database connection)..."
-
-cd backend
-if npm start &
-then
-    BACKEND_PID=$!
-    sleep 5
-    
-    # Test health endpoint
-    if curl -s http://localhost:5000/api/health > /dev/null; then
-        echo "✅ Backend is running correctly"
-    else
-        echo "⚠️  Backend may have issues - check your database configuration"
-    fi
-    
-    kill $BACKEND_PID
-else
-    echo "⚠️  Backend failed to start - check your configuration"
-fi
-
-cd ..
-
-echo ""
-echo "🚀 Ready for deployment!"
-echo "Follow the DEPLOYMENT_GUIDE.md for step-by-step deployment instructions."
+echo "🚀 Ready for Azure deployment!"
