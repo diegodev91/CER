@@ -56,6 +56,22 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
+          # Check if database secrets are available
+          if [ -z "${{ secrets.DB_HOST }}" ] || [ -z "${{ secrets.DB_USER }}" ] || [ -z "${{ secrets.DB_PASSWORD }}" ]; then
+            echo "⚠️  Database secrets not configured. Skipping migrations."
+            echo "To enable automatic migrations, add these secrets to your GitHub repository:"
+            echo "- DB_HOST: Your database server hostname"
+            echo "- DB_PORT: Your database port (usually 1433 for SQL Server)"
+            echo "- DB_NAME: Your database name"
+            echo "- DB_USER: Your database username"
+            echo "- DB_PASSWORD: Your database password"
+            echo ""
+            echo "You can add secrets at: https://github.com/${{ github.repository }}/settings/secrets/actions"
+            exit 0
+          fi
+          
+          echo "✅ Database secrets found. Running migrations..."
+          
           # Get the Container App Environment
           ENVIRONMENT_NAME=$(az containerapp show \
             --name ${{ env.CONTAINER_NAME }} \
@@ -64,8 +80,10 @@ jobs:
             --output tsv | cut -d'/' -f9)
           
           # Run migrations using a one-time job
+          JOB_NAME="migration-job-$(echo ${{ github.sha }} | cut -c1-8)"
+          
           az containerapp job create \
-            --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+            --name $JOB_NAME \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --environment $ENVIRONMENT_NAME \
             --trigger-type Manual \
@@ -76,7 +94,7 @@ jobs:
             --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} \
             --secrets \
               "db-host=${{ secrets.DB_HOST }}" \
-              "db-port=${{ secrets.DB_PORT }}" \
+              "db-port=${{ secrets.DB_PORT || '1433' }}" \
               "db-name=${{ secrets.DB_NAME }}" \
               "db-user=${{ secrets.DB_USER }}" \
               "db-password=${{ secrets.DB_PASSWORD }}" \
@@ -92,7 +110,7 @@ jobs:
           
           # Start the migration job and wait for completion
           az containerapp job start \
-            --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+            --name $JOB_NAME \
             --resource-group ${{ env.RESOURCE_GROUP }}
           
           # Wait for job completion (max 5 minutes)
@@ -100,30 +118,30 @@ jobs:
           elapsed=0
           while [ $elapsed -lt $timeout ]; do
             status=$(az containerapp job execution list \
-              --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+              --name $JOB_NAME \
               --resource-group ${{ env.RESOURCE_GROUP }} \
               --query "[0].properties.status" \
               --output tsv 2>/dev/null || echo "NotFound")
             
             if [ "$status" = "Succeeded" ]; then
-              echo "Migration job completed successfully"
+              echo "✅ Migration job completed successfully"
               break
             elif [ "$status" = "Failed" ]; then
-              echo "Migration job failed"
+              echo "❌ Migration job failed"
               az containerapp job execution list \
-                --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+                --name $JOB_NAME \
                 --resource-group ${{ env.RESOURCE_GROUP }}
               exit 1
             fi
             
-            echo "Waiting for migration job to complete... (${elapsed}s)"
+            echo "⏳ Waiting for migration job to complete... (${elapsed}s)"
             sleep 10
             elapsed=$((elapsed + 10))
           done
           
           # Clean up migration job
           az containerapp job delete \
-            --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+            --name $JOB_NAME \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --yes || true
 
