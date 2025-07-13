@@ -50,7 +50,7 @@ const About = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-green-600 text-white py-16">
+      <div className="bg-gradient-to-br from-cer-primary-600 via-cer-primary-700 to-cer-secondary-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-6">
             <Youtube className="h-16 w-16 text-red-400 mx-auto mb-4" />
@@ -58,7 +58,7 @@ const About = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             Acerca de CER - Cuidando el Rancho
           </h1>
-          <p className="text-xl text-green-100 max-w-3xl mx-auto">
+          <p className="text-xl text-cer-secondary-100 max-w-3xl mx-auto">
             Somos un grupo de comedia que llegó en 2025 para quedarse. 
             Te haremos reír con nuestras ocurrencias, sátiras e insultos 
             políticamente incorrectos. ¡Prepárate para la diversión sin límites!
@@ -151,11 +151,11 @@ const About = () => {
             {milestones.map((milestone, index) => (
               <div key={index} className="text-center">
                 <div className="flex justify-center mb-4">
-                  <div className="p-3 rounded-full bg-green-100 text-green-600">
+                  <div className="p-3 rounded-full bg-cer-primary-100 text-cer-primary-600">
                     <milestone.icon className="h-8 w-8" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-green-600 mb-2">
+                <div className="text-2xl font-bold text-cer-primary-600 mb-2">
                   {milestone.year}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -204,12 +204,12 @@ const About = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="py-16 bg-green-600">
+      <div className="py-16 bg-gradient-to-r from-cer-primary-600 to-cer-secondary-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             ¡Únete a la Familia CERranos!
           </h2>
-          <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-cer-secondary-100 mb-8 max-w-2xl mx-auto">
             Forma parte de nuestra comunidad y disfruta de humor sin filtros, 
             sátiras épicas y contenido que te hará reír hasta llorar.
           </p>
@@ -225,7 +225,7 @@ const About = () => {
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center px-8 py-4 bg-white text-green-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
+              className="inline-flex items-center px-8 py-4 bg-white text-cer-primary-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
             >
               <Heart className="h-5 w-5 mr-2" />
               Contáctanos

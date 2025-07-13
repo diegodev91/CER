@@ -86,16 +86,16 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
+      <div className="relative bg-gradient-to-br from-cer-primary-600 via-cer-primary-700 to-cer-secondary-600 text-white">
+        <div className="absolute inset-0 bg-black opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <div className="mb-6">
               <div className="inline-flex items-center space-x-3 mb-4">
                 <Youtube className="h-12 w-12 text-red-400" />
                 <div className="text-left">
-                  <p className="text-lg font-medium text-green-100">En RORO Network</p>
-                  <p className="text-sm text-green-200">Canal de YouTube Oficial</p>
+                  <p className="text-lg font-medium text-cer-secondary-100">En RORO Network</p>
+                  <p className="text-sm text-cer-secondary-200">Canal de YouTube Oficial</p>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@ const Home = () => {
               CER - Cuidando el Rancho
             </h1>
             
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-green-100">
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-cer-secondary-100">
               El grupo de comedia que llegó en 2025 para quedarse. 
               Únete a la comunidad <span className="font-bold text-yellow-300">CERranos</span> y 
               disfruta del mejor humor sin filtros y sátiras políticamente incorrectas.
@@ -120,7 +120,7 @@ const Home = () => {
               </Link>
               <Link
                 to="/reels"
-                className="inline-flex items-center px-8 py-4 bg-white text-green-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
+                className="inline-flex items-center px-8 py-4 bg-white text-cer-primary-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
               >
                 <Star className="h-5 w-5 mr-2" />
                 Reels Destacados
@@ -369,12 +369,12 @@ const Home = () => {
       )}
 
       {/* CTA Section */}
-      <div className="py-16 bg-green-600">
+      <div className="py-16 bg-gradient-to-r from-cer-primary-600 to-cer-secondary-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             ¡Únete a la Familia CERranos!
           </h2>
-          <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-cer-secondary-100 mb-8 max-w-2xl mx-auto">
             Suscríbete a nuestro canal de YouTube y no te pierdas ningún episodio 
             de humor sin filtros y sátiras políticamente incorrectas.
           </p>
@@ -390,7 +390,7 @@ const Home = () => {
             </a>
             <Link
               to="/about"
-              className="inline-flex items-center px-8 py-4 bg-white text-green-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
+              className="inline-flex items-center px-8 py-4 bg-white text-cer-primary-700 font-semibold rounded-lg shadow-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200"
             >
               Conoce más sobre CER
             </Link>

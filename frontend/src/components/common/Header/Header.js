@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-green-800 text-white shadow-lg">
+    <header className="bg-gradient-to-r from-cer-primary-800 to-cer-primary-700 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -31,7 +31,7 @@ const Header = () => {
             <Tv className="h-8 w-8" />
             <div>
               <h1 className="text-xl font-bold">CER</h1>
-              <p className="text-xs text-green-200">Cuidando el Rancho</p>
+              <p className="text-xs text-cer-secondary-200">Cuidando el Rancho</p>
             </div>
           </Link>
 

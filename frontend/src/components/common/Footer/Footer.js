@@ -4,7 +4,7 @@ import { Tv, Facebook, Instagram, Youtube, Mail, MapPin, Phone } from 'lucide-re
 
 const Footer = () => {
   return (
-    <footer className="bg-cer-green-800 text-white">
+    <footer className="bg-gradient-to-r from-cer-dark-800 to-cer-dark-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo & About */}
@@ -13,21 +13,21 @@ const Footer = () => {
               <Tv className="h-8 w-8" />
               <div>
                 <h2 className="text-xl font-bold">CER</h2>
-                <p className="text-sm text-cer-green-200">Cuidando el Rancho</p>
+                <p className="text-sm text-cer-secondary-200">Cuidando el Rancho</p>
               </div>
             </Link>
-            <p className="text-cer-green-200 mb-4 max-w-md">
+            <p className="text-cer-secondary-200 mb-4 max-w-md">
               El grupo de comedia que llegó en 2025 para quedarse, transmitido por RORO Network. 
               Únete a nuestra comunidad y disfruta de humor sin filtros.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-cer-green-200 hover:text-white transition-colors">
+              <a href="#" className="text-cer-secondary-200 hover:text-white transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-cer-green-200 hover:text-white transition-colors">
+              <a href="#" className="text-cer-secondary-200 hover:text-white transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-cer-green-200 hover:text-white transition-colors">
+              <a href="#" className="text-cer-secondary-200 hover:text-white transition-colors">
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
