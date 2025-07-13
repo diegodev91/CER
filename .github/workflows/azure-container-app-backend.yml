@@ -56,33 +56,76 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          # Run migrations in a temporary container
-          az containerapp job create \
-            --name migration-job-${{ github.sha }} \
+          # Get the Container App Environment
+          ENVIRONMENT_NAME=$(az containerapp show \
+            --name ${{ env.CONTAINER_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --environment-variables \
-              DB_HOST="${{ secrets.DB_HOST }}" \
-              DB_PORT="${{ secrets.DB_PORT }}" \
-              DB_NAME="${{ secrets.DB_NAME }}" \
-              DB_USER="${{ secrets.DB_USER }}" \
-              DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-            --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} \
-            --command "npm run db:migrate" \
-            --replica-timeout 300 \
-            --parallelism 1 \
-            --replica-completion-count 1 || true
+            --query "properties.environmentId" \
+            --output tsv | cut -d'/' -f9)
           
-          # Start the migration job
+          # Run migrations using a one-time job
+          az containerapp job create \
+            --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --environment $ENVIRONMENT_NAME \
+            --trigger-type Manual \
+            --replica-timeout 300 \
+            --replica-retry-limit 1 \
+            --parallelism 1 \
+            --replica-completion-count 1 \
+            --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            --secrets \
+              "db-host=${{ secrets.DB_HOST }}" \
+              "db-port=${{ secrets.DB_PORT }}" \
+              "db-name=${{ secrets.DB_NAME }}" \
+              "db-user=${{ secrets.DB_USER }}" \
+              "db-password=${{ secrets.DB_PASSWORD }}" \
+            --env-vars \
+              "DB_HOST=secretref:db-host" \
+              "DB_PORT=secretref:db-port" \
+              "DB_NAME=secretref:db-name" \
+              "DB_USER=secretref:db-user" \
+              "DB_PASSWORD=secretref:db-password" \
+              "NODE_ENV=production" \
+            --command "/bin/sh" \
+            --args "-c,npm run db:migrate"
+          
+          # Start the migration job and wait for completion
           az containerapp job start \
-            --name migration-job-${{ github.sha }} \
+            --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
             --resource-group ${{ env.RESOURCE_GROUP }}
           
+          # Wait for job completion (max 5 minutes)
+          timeout=300
+          elapsed=0
+          while [ $elapsed -lt $timeout ]; do
+            status=$(az containerapp job execution list \
+              --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+              --resource-group ${{ env.RESOURCE_GROUP }} \
+              --query "[0].properties.status" \
+              --output tsv 2>/dev/null || echo "NotFound")
+            
+            if [ "$status" = "Succeeded" ]; then
+              echo "Migration job completed successfully"
+              break
+            elif [ "$status" = "Failed" ]; then
+              echo "Migration job failed"
+              az containerapp job execution list \
+                --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
+                --resource-group ${{ env.RESOURCE_GROUP }}
+              exit 1
+            fi
+            
+            echo "Waiting for migration job to complete... (${elapsed}s)"
+            sleep 10
+            elapsed=$((elapsed + 10))
+          done
+          
           # Clean up migration job
-          sleep 60
           az containerapp job delete \
-            --name migration-job-${{ github.sha }} \
+            --name migration-job-$(echo ${{ github.sha }} | cut -c1-8) \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --yes
+            --yes || true
 
     - name: Deploy to Azure Container App
       uses: azure/CLI@v1
