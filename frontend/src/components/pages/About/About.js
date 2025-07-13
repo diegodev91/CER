@@ -22,27 +22,27 @@ const About = () => {
 
   const milestones = [
     {
-      year: "2021",
+      year: "2025",
       title: "Nace CER",
-      description: "Iniciamos nuestro canal de YouTube con la primera temporada.",
+      description: "Iniciamos en 2025 para revolucionar la comedia en YouTube.",
       icon: Play
     },
     {
-      year: "2022",
-      title: "Crecimiento Exponencial",
-      description: "Alcanzamos los primeros 10K suscriptores CERranos.",
+      year: "2025",
+      title: "Humor Sin Límites",
+      description: "Establecemos nuestro estilo: sátiras y humor políticamente incorrecto.",
       icon: Users
     },
     {
-      year: "2023",
-      title: "Comunidad Consolidada",
-      description: "Superamos los 50K CERranos y lanzamos contenido exclusivo.",
+      year: "2025",
+      title: "Pato Blanco vs CER",
+      description: "Carlos Orozco se convierte en nuestro enemigo número uno.",
       icon: Heart
     },
     {
-      year: "2024",
-      title: "Nuevos Horizontes",
-      description: "Introducimos reels y expandimos nuestro contenido.",
+      year: "2025",
+      title: "Llegamos para Quedarnos",
+      description: "Consolidamos nuestra presencia y expandimos nuestro contenido.",
       icon: Star
     }
   ];
@@ -59,9 +59,9 @@ const About = () => {
             Acerca de CER - Cuidando el Rancho
           </h1>
           <p className="text-xl text-green-100 max-w-3xl mx-auto">
-            Somos más que un programa de YouTube. Somos una familia que 
-            comparte la pasión por la vida rural, los valores familiares 
-            y las aventuras en el rancho.
+            Somos un grupo de comedia que llegó en 2025 para quedarse. 
+            Te haremos reír con nuestras ocurrencias, sátiras e insultos 
+            políticamente incorrectos. ¡Prepárate para la diversión sin límites!
           </p>
         </div>
       </div>
@@ -76,19 +76,20 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-lg text-gray-600">
                 <p>
-                  En <strong>CER - Cuidando el Rancho</strong>, creemos que la vida 
-                  en el campo enseña valores fundamentales: trabajo duro, respeto 
-                  por la naturaleza, amor por la familia y la importancia de la comunidad.
+                  En <strong>CER - Cuidando el Rancho</strong>, iniciamos en 2025 
+                  con una misión clara: hacerte reír hasta que te duela el estómago. 
+                  Somos especialistas en humor sin filtros, sátiras que duelen y 
+                  ocurrencias que nadie más se atreve a decir.
                 </p>
                 <p>
                   A través de nuestro canal de YouTube en <strong>RORO Network</strong>, 
-                  compartimos historias auténticas que inspiran, educan y entretienen 
-                  a toda la familia.
+                  compartimos contenido que desafía lo políticamente correcto y 
+                  abraza la risa auténtica, sin máscaras ni censura.
                 </p>
                 <p>
-                  Cada episodio y reel es una ventana a la vida rural moderna, 
-                  mostrando que la simplicidad y los valores tradicionales 
-                  siguen siendo relevantes en nuestro mundo actual.
+                  Nuestro peor enemigo número uno es <strong>Carlos Orozco</strong> 
+                  (alias "Pato Blanco"), pero incluso él no puede parar nuestra 
+                  misión de llevar diversión sin límites a todos los rincones.
                 </p>
               </div>
             </div>
@@ -102,29 +103,29 @@ const About = () => {
                   <div className="flex items-start space-x-3">
                     <Heart className="h-6 w-6 text-red-500 mt-1" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Contenido Auténtico</h4>
-                      <p className="text-gray-600">Historias reales de la vida en el rancho</p>
+                      <h4 className="font-semibold text-gray-900">Humor Sin Filtros</h4>
+                      <p className="text-gray-600">Comedy políticamente incorrecta y auténtica</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Users className="h-6 w-6 text-blue-500 mt-1" />
                     <div>
                       <h4 className="font-semibold text-gray-900">Comunidad CERranos</h4>
-                      <p className="text-gray-600">Una familia unida por valores compartidos</p>
+                      <p className="text-gray-600">Unidos por el amor a la risa sin límites</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Star className="h-6 w-6 text-yellow-500 mt-1" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Valores Familiares</h4>
-                      <p className="text-gray-600">Contenido apropiado para toda la familia</p>
+                      <h4 className="font-semibold text-gray-900">Sátiras y Ocurrencias</h4>
+                      <p className="text-gray-600">Contenido que nadie más se atreve a hacer</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Youtube className="h-6 w-6 text-red-500 mt-1" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Plataforma YouTube</h4>
-                      <p className="text-gray-600">Accesible desde cualquier dispositivo</p>
+                      <h4 className="font-semibold text-gray-900">Enemigo: Pato Blanco</h4>
+                      <p className="text-gray-600">Carlos Orozco no podrá detenernos</p>
                     </div>
                   </div>
                 </div>
@@ -142,7 +143,7 @@ const About = () => {
               Nuestro Camino
             </h2>
             <p className="text-lg text-gray-600">
-              La evolución de CER a través de los años
+              La evolución de CER desde 2025: de cero a héroes de la comedia
             </p>
           </div>
           
@@ -209,8 +210,8 @@ const About = () => {
             ¡Únete a la Familia CERranos!
           </h2>
           <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
-            Forma parte de nuestra comunidad y disfruta de contenido exclusivo, 
-            detrás de cámaras y mucho más.
+            Forma parte de nuestra comunidad y disfruta de humor sin filtros, 
+            sátiras épicas y contenido que te hará reír hasta llorar.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
