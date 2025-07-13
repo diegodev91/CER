@@ -11,6 +11,14 @@ const Comment = sequelize.define('Comment', {
     type: DataTypes.TEXT,
     allowNull: false
   },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: true, // Allow null for backward compatibility with existing comments
+    references: {
+      model: 'users',
+      key: 'id'
+    }
+  },
   authorName: {
     type: DataTypes.STRING,
     allowNull: false

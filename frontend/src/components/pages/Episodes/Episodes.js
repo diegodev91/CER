@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, Eye, Play, Filter } from 'lucide-react';
+import { Calendar, Clock, Eye, Play, Filter, Plus } from 'lucide-react';
 import YouTubeEmbed from '../../common/YouTubeEmbed/YouTubeEmbed';
 import api from '../../../services/api';
 import { endpoints } from '../../../config/api';
+import { useAuth } from '../../../context/AuthContext';
 
 const Episodes = () => {
   const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedSeason, setSelectedSeason] = useState('all');
   const [seasons, setSeasons] = useState([]);
+  const [error, setError] = useState(null);
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     fetchEpisodes();

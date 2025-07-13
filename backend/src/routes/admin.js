@@ -3,8 +3,13 @@ const Episode = require('../models/Episode');
 const News = require('../models/News');
 const Product = require('../models/Product');
 const Comment = require('../models/Comment');
+const { authenticate, authorize } = require('../middleware/auth');
 
 const router = express.Router();
+
+// Apply authentication and authorization to all admin routes
+router.use(authenticate);
+router.use(authorize('admin', 'super_admin'));
 
 // Dashboard stats
 router.get('/dashboard', async (req, res) => {

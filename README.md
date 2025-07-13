@@ -22,7 +22,7 @@ Una aplicación web moderna para el programa de YouTube "Cuidando el Rancho" de 
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- PostgreSQL
+ 
 - npm or yarn
 
 ### Installation
@@ -35,7 +35,7 @@ npm run install:all
 
 2. **Set up the database:**
 ```bash
-# Create PostgreSQL database
+# Create database
 createdb cer_database
 
 # Copy environment file and configure
@@ -78,7 +78,7 @@ CER/
 ### Backend
 - **Node.js** - Runtime
 - **Express.js** - Web framework
-- **PostgreSQL** - Database
+ 
 - **Sequelize** - ORM
 - **JWT** - Authentication
 - **Cloudinary** - Media management
@@ -155,7 +155,7 @@ Set environment variables and deploy the backend folder.
 
 Required environment variables:
 ```bash
-DATABASE_URL=postgresql://username:password@localhost:5432/cer_database
+
 JWT_SECRET=your_jwt_secret_here
 CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
 PORT=5000

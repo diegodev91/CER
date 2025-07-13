@@ -67,15 +67,7 @@ if command -v psql > /dev/null 2>&1; then
         print_status 0 "Database connection successful"
     else
         print_warning "Cannot connect to database. Please check:"
-        echo "   - PostgreSQL server is running"
-        echo "   - Database 'cer_database' exists"
-        echo "   - User 'ceradmin' has access"
     fi
-elif docker ps | grep postgres > /dev/null 2>&1; then
-    print_status 0 "PostgreSQL is running in Docker"
-else
-    print_warning "PostgreSQL not found. Install it or use Docker:"
-    echo "   Docker: docker run --name cer-postgres -e POSTGRES_DB=cer_database -e POSTGRES_USER=ceradmin -e POSTGRES_PASSWORD=password123 -p 5432:5432 -d postgres:15"
 fi
 
 # Test 4: Check dependencies

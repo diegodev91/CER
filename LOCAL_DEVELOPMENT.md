@@ -4,7 +4,7 @@
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- PostgreSQL
+- SQL Server
 - npm or yarn
 - Git
 
@@ -24,37 +24,33 @@ cd backend && npm install && cd ..
 
 ---
 
-## 🗄️ **Step 2: Set Up PostgreSQL Database**
+## 🗄️ **Step 2: Set Up SQL Server Database**
 
-### Option A: Using Local PostgreSQL
+### Option A: Using Local SQL Server
 ```bash
-# Install PostgreSQL (if not installed)
-# macOS with Homebrew:
-brew install postgresql
-brew services start postgresql
+# Install SQL Server (if not installed)
+# macOS with Docker:
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourPassword123!" \
+  -p 1433:1433 --name sql-server \
+  -d mcr.microsoft.com/mssql/server:2022-latest
 
-# Create database
-createdb cer_database
-
-# Create user (optional)
-psql postgres
-CREATE USER ceradmin WITH PASSWORD 'password123';
-GRANT ALL PRIVILEGES ON DATABASE cer_database TO ceradmin;
-\q
+# Create database using sqlcmd
+docker exec -it sql-server /opt/mssql-tools/bin/sqlcmd \
+  -S localhost -U sa -P "YourPassword123!" \
+  -Q "CREATE DATABASE cer_database;"
 ```
 
-### Option B: Using Docker (Easier)
-```bash
-# Run PostgreSQL in Docker
-docker run --name cer-postgres \
-  -e POSTGRES_DB=cer_database \
-  -e POSTGRES_USER=ceradmin \
-  -e POSTGRES_PASSWORD=password123 \
-  -p 5432:5432 \
-  -d postgres:15
+### Option B: Using SQL Server Management Studio
+```sql
+-- Connect to your SQL Server instance
+-- Create new database
+CREATE DATABASE cer_database;
 
-# Check if running
-docker ps
+-- Create user (optional)
+USE cer_database;
+CREATE LOGIN ceradmin WITH PASSWORD = 'Password123!';
+CREATE USER ceradmin FOR LOGIN ceradmin;
+ALTER ROLE db_owner ADD MEMBER ceradmin;
 ```
 
 ---
@@ -152,13 +148,12 @@ npm run db:seed
 
 ### Database Connection Issues
 ```bash
-# Check if PostgreSQL is running
-brew services list | grep postgresql
-# or
-docker ps | grep postgres
+# Check if SQL Server is running
+docker ps | grep sql-server
 
 # Test connection manually
-psql -h localhost -U ceradmin -d cer_database
+docker exec -it sql-server /opt/mssql-tools/bin/sqlcmd \
+  -S localhost -U sa -P "YourPassword123!"
 ```
 
 ### Port Already in Use
@@ -248,10 +243,11 @@ tail -f logs/app.log
 ### Database Management
 ```bash
 # Connect to database
-psql -h localhost -U ceradmin -d cer_database
+docker exec -it sql-server /opt/mssql-tools/bin/sqlcmd \
+  -S localhost -U sa -P "YourPassword123!" -d cer_database
 
 # View tables
-\dt
+SELECT name FROM sys.tables;
 
 # View specific table
 SELECT * FROM episodes;
@@ -265,4 +261,4 @@ Your local environment should now be running:
 - **Frontend**: http://localhost:3000
 - **Backend**: http://localhost:5000
 - **API Health**: http://localhost:5000/api/health
-- **Database**: PostgreSQL on localhost:5432
+- **Database**: SQL Server on localhost:1433

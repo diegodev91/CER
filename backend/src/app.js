@@ -10,6 +10,9 @@ const { resourceMonitor, startMemoryMonitoring } = require('./middleware/resourc
 const { requestTimeout, connectionLimiter } = require('./middleware/requestLimiter');
 const { circuitBreakerMiddleware } = require('./middleware/circuitBreaker');
 
+// Initialize models
+require('./models');
+
 // Import routes
 const episodeRoutes = require('./routes/episodes');
 const newsRoutes = require('./routes/news');
@@ -17,6 +20,9 @@ const shopRoutes = require('./routes/shop');
 const commentRoutes = require('./routes/comments');
 const adminRoutes = require('./routes/admin');
 const reelRoutes = require('./routes/reels');
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
+const adminUserRoutes = require('./routes/adminUsers');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -24,7 +30,7 @@ const PORT = process.env.PORT || 5001;
 // Rate limiting - More restrictive for free tier
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 50, // Reduced from 100 to 50 requests per 15 minutes
+  max: process.env.NODE_ENV === 'production' ? 50 : 1000, // Much more flexible in development
   message: {
     error: 'Too many requests from this IP, please try again later.',
     retryAfter: 15 * 60 // seconds
@@ -36,7 +42,7 @@ const limiter = rateLimit({
 // Stricter rate limiting for resource-intensive endpoints
 const strictLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 10, // 10 requests per 5 minutes for uploads/admin
+  max: process.env.NODE_ENV === 'production' ? 10 : 100, // Much more flexible in development
   message: {
     error: 'Rate limit exceeded for this operation. Please try again later.',
     retryAfter: 5 * 60
@@ -47,6 +53,8 @@ const strictLimiter = rateLimit({
 const corsOptions = {
   origin: [
     'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:3002',
     'https://www.cuidandoelrancho.com',
     'https://cuidandoelrancho.com',
     'https://gray-stone-00b286e10.1.azurestaticapps.net',
@@ -95,11 +103,14 @@ app.get('/api/health', (req, res) => {
 });
 
 // Routes with rate limiting
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/episodes', episodeRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/shop', shopRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/admin', strictLimiter, adminRoutes); // Apply strict limits to admin routes
+app.use('/api/admin', strictLimiter, adminUserRoutes); // Apply strict limits to admin user routes
 app.use('/api/reels', reelRoutes);
 
 // Error handling middleware

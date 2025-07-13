@@ -11,7 +11,7 @@
     "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
     "start": "cd backend && npm start"
   },
-  "keywords": ["tv-show", "react", "nodejs", "postgresql"],
+  "keywords": ["tv-show", "react", "nodejs"],
   "author": "CER Development Team",
   "license": "MIT",
   "devDependencies": {

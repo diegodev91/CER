@@ -49,9 +49,21 @@ const Episode = sequelize.define('Episode', {
     defaultValue: 0
   },
   tags: {
-    type: DataTypes.JSON,
+    type: DataTypes.TEXT,
     allowNull: true,
-    defaultValue: []
+    defaultValue: '[]',
+    get() {
+      const value = this.getDataValue('tags');
+      if (!value) return [];
+      try {
+        return typeof value === 'string' ? JSON.parse(value) : value;
+      } catch (error) {
+        return [];
+      }
+    },
+    set(value) {
+      this.setDataValue('tags', JSON.stringify(value || []));
+    }
   }
 }, {
   tableName: 'episodes',
