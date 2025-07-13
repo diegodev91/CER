@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Eye, EyeOff, UserPlus, Lock, Mail, User, Phone } from 'lucide-react';
 
@@ -17,6 +17,7 @@ const Register = () => {
   const [validationError, setValidationError] = useState('');
   
   const { register, loading, error, clearError } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,7 +39,8 @@ const Register = () => {
     try {
       const { confirmPassword, ...registerData } = formData;
       await register(registerData);
-      // Redirect will be handled by the parent component
+      // Redirect to login page after successful registration
+      navigate('/login');
     } catch (error) {
       // Error is handled in context
     }
