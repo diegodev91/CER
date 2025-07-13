@@ -133,9 +133,13 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log('✅ Database connected successfully');
     
-    // Sync database models
-    await sequelize.sync({ force: false });
-    console.log('✅ Database models synced');
+    // Sync database models (for development) or use migrations in production
+    if (process.env.NODE_ENV === 'production') {
+      console.log('✅ Production mode: Database schema managed by migrations');
+    } else {
+      await sequelize.sync({ force: false });
+      console.log('✅ Database models synced');
+    }
     
     app.listen(PORT, () => {
       console.log(`🚀 CER Backend server running on port ${PORT}`);

@@ -52,6 +52,38 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
+    - name: Run Database Migrations
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          # Run migrations in a temporary container
+          az containerapp job create \
+            --name migration-job-${{ github.sha }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --environment-variables \
+              DB_HOST="${{ secrets.DB_HOST }}" \
+              DB_PORT="${{ secrets.DB_PORT }}" \
+              DB_NAME="${{ secrets.DB_NAME }}" \
+              DB_USER="${{ secrets.DB_USER }}" \
+              DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            --command "npm run db:migrate" \
+            --replica-timeout 300 \
+            --parallelism 1 \
+            --replica-completion-count 1 || true
+          
+          # Start the migration job
+          az containerapp job start \
+            --name migration-job-${{ github.sha }} \
+            --resource-group ${{ env.RESOURCE_GROUP }}
+          
+          # Clean up migration job
+          sleep 60
+          az containerapp job delete \
+            --name migration-job-${{ github.sha }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --yes
+
     - name: Deploy to Azure Container App
       uses: azure/CLI@v1
       with:
