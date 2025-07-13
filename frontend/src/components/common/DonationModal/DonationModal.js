@@ -49,7 +49,7 @@ const DonationModal = () => {
                   💚 Donar a CER
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Apoya a Cuidando el Rancho
+                  Apoya a CER
                 </p>
               </div>
               <button
@@ -129,7 +129,7 @@ const DonationModal = () => {
             {/* Footer */}
             <div className="bg-gray-50 px-6 py-4 rounded-b-xl">
               <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
-                <span>🎬 Cuidando el Rancho</span>
+                <span>� CER</span>
                 <span>•</span>
                 <span>📺 RORO Network</span>
               </div>

@@ -105,9 +105,9 @@ const Home = () => {
             </h1>
             
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-green-100">
-              El programa de YouTube favorito de la familia. 
+              El grupo de comedia que llegó en 2025 para quedarse. 
               Únete a la comunidad <span className="font-bold text-yellow-300">CERranos</span> y 
-              disfruta del mejor contenido rural y familiar.
+              disfruta del mejor humor sin filtros y sátiras políticamente incorrectas.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -138,7 +138,7 @@ const Home = () => {
               La Comunidad CERranos
             </h2>
             <p className="text-lg text-gray-600">
-              Unidos por la pasión del campo y la familia
+              Unidos por el amor a la risa sin límites
             </p>
           </div>
           
@@ -171,7 +171,7 @@ const Home = () => {
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Tu plataforma completa para disfrutar de todo el contenido de 
-              Cuidando el Rancho y conectar con otros CERranos
+              CER y conectar con otros CERranos
             </p>
           </div>
           
@@ -206,7 +206,7 @@ const Home = () => {
                 🎬 Episodio Destacado
               </h2>
               <p className="text-lg text-gray-600">
-                El último episodio de Cuidando el Rancho
+                El último episodio de CER
               </p>
             </div>
             
@@ -265,7 +265,7 @@ const Home = () => {
             <YouTubePlaylist
               playlistId="PLQovf0jBx8pRPepxCD9rjsQOXsS8grL2K"
               title="🎬 Todos los Episodios de CER"
-              description="La lista completa de episodios de Cuidando el Rancho en nuestro canal oficial"
+              description="La lista completa de episodios de CER en nuestro canal oficial"
               videos={allEpisodes}
               showVideoList={true}
               maxVideosToShow={5}
@@ -376,7 +376,7 @@ const Home = () => {
           </h2>
           <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
             Suscríbete a nuestro canal de YouTube y no te pierdas ningún episodio 
-            de las aventuras en el rancho.
+            de humor sin filtros y sátiras políticamente incorrectas.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

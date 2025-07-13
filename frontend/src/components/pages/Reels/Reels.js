@@ -102,7 +102,7 @@ const Reels = () => {
               🎬 CER Reels
             </h1>
             <p className="text-xl text-gray-600 mb-6">
-              Los mejores momentos de <span className="font-semibold text-green-600">Cuidando el Rancho</span> en formato corto
+              Los mejores momentos de <span className="font-semibold text-green-600">CER</span> en formato corto
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">

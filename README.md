@@ -5,11 +5,11 @@
 [![GitHub Issues](https://img.shields.io/github/issues/diegodev91/CER)](https://github.com/diegodev91/CER/issues)
 [![YouTube Channel](https://img.shields.io/badge/YouTube-RORO%20Network-red?style=flat&logo=youtube)](https://youtube.com/@roronetwork)
 
-Una aplicación web moderna para el programa de YouTube "Cuidando el Rancho" de RORO Network. Una plataforma completa para los **CERranos** con episodios embebidos, reels, noticias y merchandise oficial.
+Una aplicación web moderna para el grupo de comedia "CER - Cuidando el Rancho" de RORO Network. Una plataforma completa para los **CERranos** con episodios embebidos, reels, noticias y merchandise oficial.
 
 ## 🎬 Acerca del Programa
 
-**CER - Cuidando el Rancho** es un programa de YouTube que se transmite en el canal **RORO Network**. Nuestra comunidad de seguidores se llama cariñosamente **"CERranos"** y esta plataforma web está diseñada especialmente para ellos.
+**CER - Cuidando el Rancho** es un grupo de comedia que se transmite en el canal de YouTube **RORO Network**. Nuestra comunidad de seguidores se llama cariñosamente **"CERranos"** y esta plataforma web está diseñada especialmente para ellos.
 
 ### Funcionalidades principales:
 - 📺 **Episodios de YouTube embebidos** - Ver todos los episodios directamente en la web

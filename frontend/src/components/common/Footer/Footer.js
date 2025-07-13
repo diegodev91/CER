@@ -17,8 +17,8 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-cer-green-200 mb-4 max-w-md">
-              El programa de televisión favorito de la familia, transmitido por la red RORO. 
-              Únete a nuestra comunidad y disfruta de contenido exclusivo.
+              El grupo de comedia que llegó en 2025 para quedarse, transmitido por RORO Network. 
+              Únete a nuestra comunidad y disfruta de humor sin filtros.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-cer-green-200 hover:text-white transition-colors">

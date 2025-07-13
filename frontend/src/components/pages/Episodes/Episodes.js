@@ -80,14 +80,14 @@ const Episodes = () => {
               📺 Episodios de CER
             </h1>
             <p className="text-xl text-gray-600 mb-6">
-              Todos los episodios completos de <span className="font-semibold text-green-600">Cuidando el Rancho</span>
+              Todos los episodios completos de <span className="font-semibold text-green-600">CER</span>
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                 🎬 RORO Network
               </span>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                🐄 Cuidando el Rancho
+                🎭 Humor Sin Filtros
               </span>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                 👥 Comunidad CERranos
